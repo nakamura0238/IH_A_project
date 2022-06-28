@@ -1,0 +1,9 @@
+{
+  "restartable": "rs",
+  "env": {
+    "NODE_ENV": "dev"
+  },
+  "watch": ["src"],
+  "ext": "js, ts, json",
+  "exec": "ts-node -r tsconfig-paths/register --files ./src/index.ts"
+}
