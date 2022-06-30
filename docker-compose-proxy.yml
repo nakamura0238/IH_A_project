@@ -6,6 +6,11 @@ services:
     image: node:current-alpine
     working_dir: /usr/src/app
     tty: true
+    environment:
+      - HTTP_PROXY=$HTTP_PROXY
+      - http_proxy=$http_proxy
+      - HTTPS_PROXY=$HTTPS_PROXY
+      - https_proxy=$https_proxy
     volumes:
       - ./services/web:/usr/src/app
       - /usr/src/app/node_modules
@@ -18,6 +23,11 @@ services:
     image: node:current-alpine
     working_dir: /usr/src/app
     tty: true
+    environment:
+      - HTTP_PROXY=$HTTP_PROXY
+      - http_proxy=$http_proxy
+      - HTTPS_PROXY=$HTTPS_PROXY
+      - https_proxy=$https_proxy
     volumes:
       - ./services/app:/usr/src/app
       - /usr/src/app/node_modules
