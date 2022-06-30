@@ -8,9 +8,14 @@ U22-2022
    - .env.local をコピペし、.env ファイルを作成。プロキシの設定を行う
    - services/app/.env.local をコピペし、.env ファイルを作成
 1. docker-compose の実行
-   ```
-   docker-compose up -d
-   ```
+	- 自宅版
+		```
+		docker-compose up -d
+		```
+	- 学校版
+		```
+		docker-compose -f docker-compose-proxy.yml up -d
+		```
 
 ## 各種 URL
 
