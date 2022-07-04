@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import SignupUser from "./domain/SignupUser";
 import UsersSerializer from "./Serializer";
 
 const usersController = () => {
@@ -6,10 +7,11 @@ const usersController = () => {
 
   const signup = (req: Request, res: Response, next: NextFunction) => {
     (async () => {
-      // リクエストボディの受取
-      // 入力内容の検証
+      // リクエストの受け取り
+      const signupUser = new SignupUser(req);
 
       // 会員登録ユースケースの実行
+      console.log(signupUser);
 
       // レスポンスの返却
       res.status(200).send(serializer.signup());
@@ -18,8 +20,7 @@ const usersController = () => {
 
   const login = (req: Request, res: Response, next: NextFunction) => {
     (async () => {
-      // リクエストボディの受取
-      // 入力内容の検証
+      // リクエストの受け取り
 
       // ログインユースケースの実行
 
