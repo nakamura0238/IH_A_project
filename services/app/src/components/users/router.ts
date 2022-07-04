@@ -6,7 +6,7 @@ const usersRouter = (express: typeof CoreExpress) => {
   const controller = usersController();
 
   router.route("/").post(controller.signup);
-  // router.route("/login").post(controller.login)
+  router.route("/login").post(controller.login);
 
   return router;
 };

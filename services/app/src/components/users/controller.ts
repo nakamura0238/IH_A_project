@@ -5,8 +5,8 @@ const usersController = () => {
   const serializer = new UsersSerializer();
 
   const signup = (req: Request, res: Response, next: NextFunction) => {
-    // リクエストボディの受取
     (async () => {
+      // リクエストボディの受取
       // 入力内容の検証
 
       // 会員登録ユースケースの実行
@@ -16,7 +16,19 @@ const usersController = () => {
     })().catch(next);
   };
 
-  return { signup };
+  const login = (req: Request, res: Response, next: NextFunction) => {
+    (async () => {
+      // リクエストボディの受取
+      // 入力内容の検証
+
+      // ログインユースケースの実行
+
+      // レスポンスの返却
+      res.status(200).send(serializer.login());
+    })().catch(next);
+  };
+
+  return { signup, login };
 };
 
 export default usersController;
