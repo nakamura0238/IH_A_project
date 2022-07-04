@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import SignupUser from "./domain/SignupUser";
 import UsersSerializer from "./Serializer";
+import usersUseCase from "./useCase";
 
 const usersController = () => {
   const serializer = new UsersSerializer();
+  const useCase = usersUseCase();
 
   const signup = (req: Request, res: Response, next: NextFunction) => {
     (async () => {
@@ -11,10 +13,10 @@ const usersController = () => {
       const signupUser = new SignupUser(req);
 
       // 会員登録ユースケースの実行
-      console.log(signupUser);
+      const result = await useCase.signup(signupUser);
 
       // レスポンスの返却
-      res.status(200).send(serializer.signup());
+      res.status(200).send(serializer.signup(result));
     })().catch(next);
   };
 
@@ -23,6 +25,7 @@ const usersController = () => {
       // リクエストの受け取り
 
       // ログインユースケースの実行
+      // トークン生成
 
       // レスポンスの返却
       res.status(200).send(serializer.login());
