@@ -1,4 +1,4 @@
-class UsersEntity {
+class UserEntity {
   public constructor(
     public id: number,
     public email: string,
@@ -7,4 +7,4 @@ class UsersEntity {
   ) {}
 }
 
-export default UsersEntity;
+export default UserEntity;

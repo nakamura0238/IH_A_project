@@ -1,19 +1,19 @@
 import Serializer from "@/lib/Serializer";
-import UsersEntity from "./entity";
+import UserEntity from "./entity";
 
 class UsersSerializer extends Serializer {
-  signup(entity: UsersEntity) {
+  signup(entity: UserEntity) {
     return {
       id: entity.id,
       email: entity.email,
     };
   }
 
-  login() {
+  login(entity: UserEntity, token: string) {
     return {
-      id: -1,
-      email: "test@example.com",
-      token: "authentication token",
+      id: entity.id,
+      email: entity.email,
+      token: token,
     };
   }
 }
