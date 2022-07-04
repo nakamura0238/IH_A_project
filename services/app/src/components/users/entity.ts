@@ -1,9 +1,9 @@
 class UserEntity {
   public constructor(
-    public id: number,
-    public email: string,
-    public password: string,
-    public lineId?: string
+    public readonly id: number,
+    public readonly email: string,
+    public readonly password?: string,
+    public readonly lineId?: string
   ) {}
 }
 
