@@ -2,11 +2,18 @@ import Serializer from "@/lib/Serializer";
 
 class UsersSerializer extends Serializer {
   signup() {
-    return {};
+    return {
+      id: -1,
+      email: "test@example.com",
+    };
   }
 
   login() {
-    return {};
+    return {
+      id: -1,
+      email: "test@example.com",
+      token: "authentication token",
+    };
   }
 }
 
