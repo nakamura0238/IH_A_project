@@ -28,7 +28,7 @@
       - [リクエストボディ](#リクエストボディ-3)
       - [レスポンス](#レスポンス-4)
     - [食材の削除](#食材の削除)
-    - [URL](#url-5)
+      - [URL](#url-5)
     - [保存場所の登録](#保存場所の登録)
       - [URL](#url-6)
       - [リクエストボディ](#リクエストボディ-4)
@@ -44,6 +44,7 @@
     - [アイコン一覧の取得](#アイコン一覧の取得)
       - [URL](#url-10)
       - [レスポンス](#レスポンス-7)
+  - [LINE](#line)
 
 ## users
 
@@ -59,7 +60,7 @@ POST /users
 
 ```json
 {
-  "name": "ユーザー名",
+  "email": "メールアドレス",
   "password": "パスワード"
 }
 ```
@@ -69,7 +70,7 @@ POST /users
 ```json
 {
   "id": -1,
-  "name": "testuser"
+  "email": "test@example.com"
 }
 ```
 
@@ -89,7 +90,7 @@ POST /users/login
 
 ```json
 {
-  "name": "ユーザー名",
+  "email": "メールアドレス",
   "password": "パスワード"
 }
 ```
@@ -132,12 +133,21 @@ POST /foods/:userId
 
 ```json
 {
+  "name": "お肉",
+  "expirationDate": Date,
+  "comment": "美味しいよ",
   "placeId": 1,
   "iconId": 1
 }
 ```
 
 #### レスポンス
+
+```json
+{
+  ...food,
+}
+```
 
 ### 食材一覧の取得
 
@@ -183,7 +193,7 @@ userId 以外
 
 ### 食材の削除
 
-### URL
+#### URL
 
 DELETE /foods/:userId/:foodId
 
@@ -205,7 +215,7 @@ POST /foods/:userId/places
 
 ```json
 {
-  "id": 1,
+  "id": -1,
   "name": "キッチン"
 }
 ```
@@ -258,10 +268,14 @@ GET /foods/icons
 {
   "icons": [
     {
-      "id": 1,
+      "id": -1,
       "name": "お肉",
       "url": "https://example.com/oniku.png"
     }
   ]
 }
 ```
+
+## LINE
+
+詳細が固まり次第追記
