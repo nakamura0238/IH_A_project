@@ -1,6 +1,6 @@
-# API ドキュメント v0.1
+# API ドキュメント v0.1.1
 
-- [API ドキュメント v0.1](#api-ドキュメント-v01)
+- [API ドキュメント v0.1.1](#api-ドキュメント-v011)
   - [users](#users)
     - [会員登録](#会員登録)
       - [URL](#url)
@@ -231,7 +231,9 @@ GET /foods/:userId/places
 ```json
 {
   "places": [
-    ...place
+    {
+      ...place
+    },
   ]
 }
 ```
