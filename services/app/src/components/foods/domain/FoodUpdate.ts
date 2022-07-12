@@ -7,24 +7,24 @@ type ReqBody = {
     place_id: number;
     name: string;
     expiration_date: Date;
-    comment: string | undefined;
+    comment: string;
 }
 
-class FoodAdd {
+class FoodUpdate {
     private readonly _id: number;
     private readonly _user_id: number;
     private readonly _icon_id: number;
     private readonly _place_id: number;
     private readonly _name: string;
     private readonly _expiration_date: Date;
-    private readonly _comment: string | undefined;
+    private readonly _comment: string;
 
     public constructor(request: Request<{}, {}, ReqBody>){
         const { id, user_id, icon_id, place_id, name, expiration_date, comment } = request.body;
     
         // 入力内容の検証
         if (name.length > 20)
-            throw new Exception("名称は20文字以下にしてください", 422);
+        throw new Exception("名称は20文字以下にしてください", 422);
 
         const today = new Date();
         if (expiration_date < today)
@@ -32,6 +32,8 @@ class FoodAdd {
 
         if (comment != undefined && comment.length > 100)
             throw new Exception("コメントは100文字以内で入力してください。", 422);
+
+
 
         this._id = id;
         this._user_id = user_id;
@@ -71,4 +73,4 @@ class FoodAdd {
     }
 }
 
-export default FoodAdd;
+export default FoodUpdate;
