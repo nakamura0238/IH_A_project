@@ -5,12 +5,10 @@ import styles from '../styles/Home.module.css'
 
 import axios from 'axios'
 
-const Home: NextPage = () => {
+const Home = (props: propsType) => {
 
-  console.log(process.env.NEXT_PUBLIC_CLIENT_SECRET)
-  console.log(process.env.NEXT_PUBLIC_CHANNEL_ACCESS_TOKEN)
-
-
+  // console.log(process.env.NEXT_PUBLIC_CLIENT_SECRET)
+  // console.log(process.env.NEXT_PUBLIC_CHANNEL_ACCESS_TOKEN)
 
   return (
     <div className={styles.container}>
@@ -21,6 +19,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <h1>{props.data}</h1>
         {/* stateはアクセスごとに変更する */}
         <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657234815&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fline&state=12345abcde&bot_prompt=normal&scope=profile%20openid&nonce=09876xyz&prompt=consent">
           line
@@ -33,3 +32,30 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export const getServerSideProps = async () => {
+  try {
+    // トークンの取得
+    
+    // 表示するデータを取得する
+
+    // 取得データをコンポーネントに渡す
+    return {
+      props: {
+        data: "getServerSidePropsから受け取った"
+      },
+    };
+    
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {
+        data: "エラーが発生しました",
+      },
+    };
+  }
+};
+
+type propsType = {
+  data: string
+}

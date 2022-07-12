@@ -16,6 +16,7 @@ const LineAuth = () => {
 
   const getToken = async () => {
 
+    // アクセストークンの発行
     var params = new URLSearchParams()
     params.append('grant_type', "authorization_code")
     params.append('code', route.query.code as string)
@@ -26,7 +27,7 @@ const LineAuth = () => {
     const token = await axios.post("https://api.line.me/oauth2/v2.1/token", params);
     console.log("token: ", token.data)
 
-
+    // トークンの検証
     var params_second = new URLSearchParams()
     params_second.append("id_token", token.data.id_token)
     params_second.append("client_id", "1657234815")
