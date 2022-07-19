@@ -19,11 +19,20 @@ const Home = (props: propsType) => {
       </Head>
 
       <main className={styles.main}>
+        <h1>ログインページ</h1>
         <h1>{props.data}</h1>
+
+        <form>
+          <p>メールアドレス</p>
+          <input type="text" />
+          <p>パスワード</p>
+          <input type="password" />
+          <button>ログイン</button>
+        </form>
         {/* stateはアクセスごとに変更する */}
-        <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657234815&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fline&state=12345abcde&bot_prompt=normal&scope=profile%20openid&nonce=09876xyz&prompt=consent">
+        {/* <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657234815&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fline&state=12345abcde&bot_prompt=normal&scope=profile%20openid&nonce=09876xyz&prompt=consent">
           line
-        </a>
+        </a> */}
 
       </main>
 
