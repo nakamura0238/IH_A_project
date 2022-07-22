@@ -13,7 +13,7 @@ services:
       - https_proxy=$https_proxy
     volumes:
       - ./services/web:/usr/src/app
-      - /usr/src/app/node_modules
+      # - /usr/src/app/node_modules
     command: [sh, -c, npm i && npm run dev]
     ports:
       - 3000:3000
@@ -30,14 +30,15 @@ services:
       - https_proxy=$https_proxy
     volumes:
       - ./services/app:/usr/src/app
-      - /usr/src/app/node_modules
+      # - /usr/src/app/node_modules
     command: [sh, -c, npm i && npm run start]
     ports:
       - 3001:3001
 
   # mysql
   mysql:
-    image: mysql:8.0-debian
+    image: mysql:8.0
+    platform: "linux/amd64"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: myapp
@@ -53,6 +54,8 @@ services:
   # phpmyadmin
   phpmyadmin:
     image: phpmyadmin:apache
+    platform: "linux/amd64"
+
     depends_on:
       - mysql
     environment:
