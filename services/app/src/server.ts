@@ -4,8 +4,9 @@ import cors from "cors";
 import config from "@/config";
 import usersRouter from "@/components/users/router";
 import errorHandling from "@/middlewares/errorHandling";
-import Users from "@/lib/Database/Users";
-import { fetchByEmail } from "./components/users/mapper";
+import { Users } from "@/lib/Database/Users";
+import { UsersDB } from "./components/users/mapper";
+// import { fetchByEmail } from "./components/users/mapper";
 
 const app = express();
 
@@ -25,9 +26,11 @@ app.use("/api/v1/users", usersRouter(express));
 // TODO: 後で消す
 app.route("/db").get((req: Request, res: Response, next: NextFunction) => {
   (async () => {
-    const users = await fetchByEmail("test2@example.com");
+    const users = await UsersDB.select({ id: 5 });
 
-    console.log(users);
+    users.map((user) => {
+      console.log("id: %d, email: %s", user.id, user.email);
+    });
     res.status(200).end();
   })().catch(next);
 });

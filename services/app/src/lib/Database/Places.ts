@@ -5,9 +5,9 @@ import {
   DataTypes,
 } from "sequelize/types";
 import sequelize from ".";
-import Users from "./Users";
+import { Users } from "./Users";
 
-class Places extends Model<
+export class Places extends Model<
   InferAttributes<Places>,
   InferCreationAttributes<Places>
 > {
@@ -43,4 +43,8 @@ Places.init(
 
 Places.belongsTo(Users, { foreignKey: "user_id" });
 
-export default Places;
+export type PlacesType = {
+  id?: number;
+  userId?: number;
+  name?: string;
+};

@@ -7,7 +7,7 @@ import {
 } from "sequelize";
 import sequelize from "./index";
 
-class Users extends Model<
+export class Users extends Model<
   InferAttributes<Users>,
   InferCreationAttributes<Users>
 > {
@@ -49,4 +49,9 @@ Users.init(
   }
 );
 
-export default Users;
+export type UsersType = {
+  id?: number;
+  email?: string;
+  password?: string;
+  line_id?: number;
+};

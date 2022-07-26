@@ -6,7 +6,7 @@ import {
 } from "sequelize/types";
 import sequelize from ".";
 
-class Icons extends Model<
+export class Icons extends Model<
   InferAttributes<Icons>,
   InferCreationAttributes<Icons>
 > {
@@ -24,7 +24,7 @@ Icons.init(
       autoIncrement: true,
     },
     category: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     image_path: {
@@ -40,4 +40,8 @@ Icons.init(
   }
 );
 
-export default Icons;
+export type IconType = {
+  id?: number;
+  category?: string;
+  imagePath?: string;
+};

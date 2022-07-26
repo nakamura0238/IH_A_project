@@ -5,11 +5,11 @@ import {
   Model,
 } from "sequelize/types";
 import sequelize from ".";
-import Icons from "./Icons";
-import Places from "./Places";
-import Users from "./Users";
+import { Icons } from "./Icons";
+import { Places } from "./Places";
+import { Users } from "./Users";
 
-class Foods extends Model<
+export class Foods extends Model<
   InferAttributes<Foods>,
   InferCreationAttributes<Foods>
 > {
@@ -72,4 +72,12 @@ Foods.belongsTo(Users, { foreignKey: "user_id" });
 Foods.belongsTo(Places, { foreignKey: "place_id" });
 Foods.belongsTo(Icons, { foreignKey: "icon_id" });
 
-export default Foods;
+export type FoodsType = {
+  id?: number;
+  userId?: number;
+  iconId?: number;
+  placeId?: number;
+  name?: string;
+  expirationDate?: Date;
+  comment?: string;
+};
