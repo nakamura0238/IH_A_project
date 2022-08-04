@@ -27,7 +27,8 @@ services:
 
   # mysql
   mysql:
-    image: mysql:8.0-debian
+    image: mysql:8.0
+    platform: "linux/amd64"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: myapp
@@ -43,6 +44,7 @@ services:
   # phpmyadmin
   phpmyadmin:
     image: phpmyadmin:apache
+    platform: "linux/arm64"
     depends_on:
       - mysql
     environment:

@@ -14,7 +14,9 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
-    "log4js": "^6.5.2"
+    "log4js": "^6.5.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.21.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
