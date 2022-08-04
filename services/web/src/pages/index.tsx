@@ -3,7 +3,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = () => {
+import axios from 'axios'
+
+const Home = (props: propsType) => {
+
+  // console.log(process.env.NEXT_PUBLIC_CLIENT_SECRET)
+  // console.log(process.env.NEXT_PUBLIC_CHANNEL_ACCESS_TOKEN)
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,60 +19,52 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1>ログインページ</h1>
+        <h1>{props.data}</h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+        <form>
+          <p>メールアドレス</p>
+          <input type="text" />
+          <p>パスワード</p>
+          <input type="password" />
+          <button>ログイン</button>
+        </form>
+        {/* stateはアクセスごとに変更する */}
+        {/* <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657234815&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fline&state=12345abcde&bot_prompt=normal&scope=profile%20openid&nonce=09876xyz&prompt=consent">
+          line
+        </a> */}
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   )
 }
 
 export default Home
+
+export const getServerSideProps = async () => {
+  try {
+    // トークンの取得
+    
+    // 表示するデータを取得する
+
+    // 取得データをコンポーネントに渡す
+    return {
+      props: {
+        data: "getServerSidePropsから受け取った"
+      },
+    };
+    
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {
+        data: "エラーが発生しました",
+      },
+    };
+  }
+};
+
+type propsType = {
+  data: string
+}
