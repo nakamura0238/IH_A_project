@@ -1,19 +1,12 @@
-import Footer from "../../components/footer"
-import Icon from "../../components/icon"
-import Head from 'next/head'
+import styles from '../styles/Home.module.css'
 import Image from 'next/image'
-import styles from '../../styles/Home.module.css'
-import React from "react"
-import All from "../../components/Item"
 
 
 
-const Foods = () => {
+const Icon = () => {
   return (
-    <div>
-      <Head>
-        <title>一覧</title>
-      </Head>
+    <div className={styles.container}>
+
 
       <main className={styles.main}>
         <h1 className={styles.title}>
@@ -37,12 +30,10 @@ const Foods = () => {
 
         </span>
 
-        <All />
-
       </main>
+
     </div>
   )
 }
 
-
-export default Foods
+export default Icon
