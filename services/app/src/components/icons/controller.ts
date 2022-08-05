@@ -1,82 +1,29 @@
-import express, {Request, Response, NextFunction } from 'express';
-import FoodAdd from './domain/FoodAdd';
-import FoodList from './domain/FoodList';
-import FoodTrash from './domain/FoodTrash';
-import FoodUpdate from './domain/FoodUpdate';
-import FoodsSerializer from './Serializer';
-import foodsUseCase from './useCase';
+import { NextFunction, Request, Response } from "express"
+import IconsSerializer from "./Serializer";
 
-const foodsController = () => {
-  const serializer = new FoodsSerializer();
-  const useCase = foodsUseCase();
+const iconsController = () => {
+    const serializer = new IconsSerializer();
+    
+    const list = (_: Request, res: Response, next: NextFunction) => {
+        (async () => {
+            // TODO: データベースからアイコンの一覧を取得する
+            const result = [
+                {
+                    id: 1,
+                    category: "11",
+                    image_path: "niku.png"
+                },
+                {
+                    id: 2,
+                    category: "22",
+                    image_path: "yasai.png"
+                }
+            ]
 
-  //食材一覧
-  const foodList = (req: Request, res: Response, next:NextFunction) => {
-    (async() => {
-      // リクエスト内容の受け取り
-      const foodList = new FoodList(req);
-      
-      // 食品risutoユースケースの実行
-      const result = await useCase.foodList(foodList);
+            res.status(200).send(serializer.list(result));
+        })().catch(next);
+    }
+    return { list }
+}
 
-      // レスポンスの返却
-      res.status(200).send(serializer.foodList(result));
-    })().catch(next);
-  };
-
-  //食材登録
-  const foodAdd = (req: Request, res: Response, next: NextFunction) => {
-    (async() => {
-      // リクエスト内容の受け取り
-      const foodAdd = new FoodAdd(req);
-
-      // 食材登録ユースケースの実行
-      const result = await useCase.foodAdd(foodAdd);
-
-      // レスポンスの返却
-      res.status(200).send(serializer.foodAdd(result));
-    })().catch(next);
-  };
-
-  //食材更新
-  const foodUpdate = (req: Request, res: Response, next: NextFunction) => {
-    (async() => {
-      // リクエスト内容の受け取り
-      const foodUpdate = new FoodUpdate(req);
-
-      // 食材登録ユースケースの実行
-      const result = await useCase.foodUpdate(foodUpdate);
-
-      // レスポンスの返却
-      res.status(200).send(serializer.foodUpdate(result));
-    })().catch(next);
-  };
-
-  //食材削除
-  const foodTrash = (req: Request, res: Response, next: NextFunction) => {
-    (async() => {
-      // リクエスト内容の受け取り
-      const foodTrash = new FoodTrash(req);
-
-      // 食材登録ユースケースの実行
-      const result = await useCase.foodTrash(foodTrash);
-
-      // レスポンスの返却
-      res.status(200).send(serializer.foodTrash(result));
-    })().catch(next);
-  };
-
-  
-  
-  //アイコン一覧取得
-  const iconList = (req: Request, res: Response) => {
-
-    // レスポンスの返却
-    res.status(200).send(serializer.foodList(result));
-  };
-
-  return { foodList, foodAdd, foodUpdate, foodTrash,
-    placeList, placeAdd, placeUpdate, placeTrash, iconList };
-};
-
-export default foodsController;
+export default iconsController

@@ -3,6 +3,7 @@ import cors from "cors";
 
 import config from "@/config";
 import usersRouter from "@/components/users/router";
+import iconsRouter from "./components/icons/router";
 import errorHandling from "@/middlewares/errorHandling";
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(cors(options));
 // ルーティング
 app.use("/api/v1/users", usersRouter(express));
 // app.use("/api/v1/foods", foodsRouter(express))
+app.use("/api/v1/foods", iconsRouter(express));
 
 // エラーハンドリング
 errorHandling(app);

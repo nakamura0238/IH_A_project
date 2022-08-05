@@ -1,4 +1,4 @@
-import express, {Request, Response, NextFunction } from 'express';
+import {Request, Response, NextFunction } from 'express';
 import FoodAdd from './domain/FoodAdd';
 import FoodList from './domain/FoodList';
 import FoodTrash from './domain/FoodTrash';

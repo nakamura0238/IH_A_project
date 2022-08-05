@@ -1,13 +1,13 @@
 import type CoreExpress from "express";
-import foodsController from "./controller";
+import iconsController from "./controller";
 
-const foodsRouter = (express: typeof CoreExpress) => {
+const iconsRouter = (express: typeof CoreExpress) => {
   const router = express.Router();
-  const controller = foodsController();
+  const controller = iconsController();
 
-  router.route("/foods/icons").get(controller.iconList);
+  router.route("/icons").get(controller.list);
 
   return router;
 };
 
-export default foodsRouter;
+export default iconsRouter;
