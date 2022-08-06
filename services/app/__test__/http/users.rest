@@ -1,1 +1,16 @@
 POST http://localhost:3001/api/v1/users
+content-type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password"
+}
+
+###
+POST http://localhost:3001/api/v1/users/login
+content-type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password"
+}
