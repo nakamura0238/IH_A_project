@@ -2,3 +2,4 @@ node_modules
 services/mysql/data
 
 .env
+
