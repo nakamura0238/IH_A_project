@@ -18,8 +18,13 @@ const usersUseCase = () => {
 
   const login = async (user: LoginUser) => {
     // ユーザーの取得
+    const users = await UsersDB.fetchByEmail(user.email);
+    const dbUser = users[0];
+
     // パスワード検証
-    return new UserEntity(-1, user.email);
+    if (false) throw new Exception("メールアドレスまたはパスワードが間違っています", 401)
+
+    return new UserEntity(dbUser.id as number, user.email);
   };
 
   return { signup, login };
