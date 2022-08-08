@@ -1,20 +1,29 @@
 import Link from "next/link"
+import styles from "../styles/header.module.css"
 
 const Header = () => {
   return (
-    <header>
+    <header className={styles.header}>
       <Link href={"/user"}>
-        user
-      </Link><br />
+        <a className={styles.nav_item}>
+          user
+        </a>
+      </Link>
       <Link href={"/foods"}>
-        foods
-      </Link><br />
+        <a className={styles.nav_item}>
+          foods
+        </a>
+      </Link>
       <Link href={"/foods/place"}>
-        place
-      </Link><br />
+        <a className={styles.nav_item}>
+          place
+        </a>
+      </Link>
       <Link href={"/foods/delete"}>
-        delte
-      </Link><br />
+        <a className={styles.nav_item}>
+          delete
+        </a>
+      </Link>
     </header>
   )
 }

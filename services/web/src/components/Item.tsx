@@ -14,13 +14,18 @@ const Item = [
   }
 ]
 const All = () => {
+
+  const showDetail = () => {
+    
+  }
+
   return (
     <React.Fragment>
       {Item.map((item) => {
         return (
-          <div key={item.id}>
+          <button key={item.id}>
             <p>{item.name} {item.line}</p>
-          </div>
+          </button>
         )
       })}
     </React.Fragment>

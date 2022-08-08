@@ -1,3 +1,5 @@
+import Layout from "../../components/Layout"
+
 type place = {
   id: number,
   userId: number,
@@ -37,7 +39,7 @@ const changeName = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
 
 const Place = () => {
   return (
-    <>
+    <Layout>
       <h1>保存場所管理ページ</h1>
       {places.map((val, i) => {
         return (
@@ -49,7 +51,7 @@ const Place = () => {
           </div>
         )
       })}
-    </>
+    </Layout>
   )
 }
 

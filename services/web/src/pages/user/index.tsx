@@ -1,8 +1,9 @@
 import { parseCookies } from "nookies"
+import Layout from "../../components/Layout"
 
 const User = () => {
   return (
-    <>
+    <Layout>
       ユーザートップページ
       <p>メールアドレス</p>
       <p>example@mail.com</p>
@@ -14,7 +15,7 @@ const User = () => {
       </a> */}
 
       <button>ログアウト</button>
-    </>
+    </Layout>
   )
 }
 
