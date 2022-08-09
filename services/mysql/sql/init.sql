@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- ホスト: 127.0.0.1
--- 生成日時: 2022-06-27 08:29:00
--- サーバのバージョン： 10.4.21-MariaDB
--- PHP のバージョン: 8.0.10
+-- ホスト: mysql
+-- 生成日時: 2022 年 8 月 09 日 10:54
+-- サーバのバージョン： 8.0.30
+-- PHP のバージョン: 8.0.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,20 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- データベース: `practice`
+-- データベース: `myapp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `icon_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -28,14 +40,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `foods` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `icon_id` int(11) NOT NULL,
-  `place_id` int(11) NOT NULL,
-  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `icon_id` int NOT NULL,
+  `place_id` int NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `expiration_date` date NOT NULL,
-  `comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `comment` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- テーブルのデータのダンプ `foods`
@@ -51,10 +63,10 @@ INSERT INTO `foods` (`id`, `user_id`, `icon_id`, `place_id`, `name`, `expiration
 --
 
 CREATE TABLE `icons` (
-  `id` int(11) NOT NULL,
-  `category` char(11) COLLATE utf8_unicode_ci NOT NULL,
-  `image_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `category` char(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `image_path` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- テーブルのデータのダンプ `icons`
@@ -70,10 +82,10 @@ INSERT INTO `icons` (`id`, `category`, `image_path`) VALUES
 --
 
 CREATE TABLE `places` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- テーブルのデータのダンプ `places`
@@ -89,11 +101,11 @@ INSERT INTO `places` (`id`, `user_id`, `name`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `email` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
-  `line_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL,
+  `email` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `password` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `line_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- テーブルのデータのダンプ `users`
@@ -144,25 +156,25 @@ ALTER TABLE `users`
 -- テーブルの AUTO_INCREMENT `foods`
 --
 ALTER TABLE `foods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルの AUTO_INCREMENT `icons`
 --
 ALTER TABLE `icons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルの AUTO_INCREMENT `places`
 --
 ALTER TABLE `places`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルの AUTO_INCREMENT `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- ダンプしたテーブルの制約

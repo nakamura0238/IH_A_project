@@ -44,7 +44,6 @@ services:
   # phpmyadmin
   phpmyadmin:
     image: phpmyadmin:apache
-    platform: "linux/arm64"
     depends_on:
       - mysql
     environment:

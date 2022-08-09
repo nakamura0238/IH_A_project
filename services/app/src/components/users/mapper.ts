@@ -21,22 +21,26 @@ export namespace UsersDB {
    * @returns 更新後の情報
    */
   export const update = async (oldUser: UsersType, newUser: UsersType) => {
-    const user = await Users.findOne({ where: oldUser });
+    const user = await Users.findAll({ where: oldUser });
     if (!user) {
       throw new Exception("Users Not Found", 404);
     }
+    if (user.length > 1) {
+      throw new Exception("Multiple targets found. Please narrow down to one", 404);
+    }
+    const target = user[0];
 
     if (newUser.email) {
-      user.email = newUser.email;
+      target.email = newUser.email;
     }
     if (newUser.password) {
-      user.password = newUser.password;
+      target.password = newUser.password;
     }
     if (newUser.line_id) {
-      user.line_id = newUser.line_id;
+      target.line_id = newUser.line_id;
     }
 
-    const users = await user.save();
+    const users = await target.save();
     return users;
   };
 
@@ -71,11 +75,16 @@ export namespace UsersDB {
    * @returns 成功→true、 失敗→throw new Exception
    */
   export const destroy = async (condition: UsersType) => {
-    const food = await Users.findOne({ where: condition });
-    if (!food) {
+    const users = await Users.findAll({ where: condition });
+    if (!users) {
       throw new Exception("Users not Found", 404);
     }
-    await food.destroy().catch(() => {
+    if (users.length > 1) {
+      throw new Exception("Multiple targets found. Please narrow down to one", 404);
+    }
+    const target = users[0];
+
+    await target.destroy().catch(() => {
       throw new Exception("Failed Delete Data", 404);
     });
     return true;
@@ -98,7 +107,6 @@ export namespace UsersDB {
    * @returns Userのモデル（JSON）
    */
   export const register = async (email: string, password: string) => {
-    // let result = await Users.create({ email, password });
     let user = await insert({ email, password });
     return user;
   };

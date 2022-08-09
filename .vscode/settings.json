@@ -18,5 +18,8 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "csscomb.formatOnSave": true,
-  "csscomb.preset": "./.vscode/mycsscomb.json"
+  "csscomb.preset": "./.vscode/mycsscomb.json",
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }

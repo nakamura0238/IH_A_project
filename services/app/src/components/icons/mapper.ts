@@ -29,7 +29,7 @@ export namespace IconDB {
     }
 
     if (icons.length > 1) {
-      throw new Exception("Some Data Found", 404);
+      throw new Exception("Multiple targets found. Please narrow down to one", 404);
     }
 
     const icon = icons[0];
@@ -52,6 +52,12 @@ export namespace IconDB {
   export const insert = async (icon: Icons) => {
     return await Icons.create(icon);
   };
+
+  /**
+ * DELETE(destroy)メソッド
+ * @param condition 探したい条件データ
+ * @returns 成功→true、 失敗→throw new Exception
+ */
   export const destroy = async (condition: IconType) => {
     let icons = await Icons.findAll({ where: condition });
 
@@ -60,17 +66,15 @@ export namespace IconDB {
     }
 
     if (icons.length > 1) {
-      throw new Exception("Some Data Found", 404);
+      throw new Exception("Multiple targets found. Please narrow down to one", 404);
     }
 
     const icon = icons[0];
-    return icon
+    await icon
       .destroy()
-      .then(() => {
-        return true;
-      })
       .catch(() => {
         throw new Exception("Failed Delete Data", 404);
       });
+    return true;
   };
 }

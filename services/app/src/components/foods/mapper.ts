@@ -21,31 +21,35 @@ export namespace FoodsDB {
    * @returns 更新後の情報
    */
   export const update = async (oldFood: FoodsType, newFood: FoodsType) => {
-    const food = await Foods.findOne({ where: oldFood });
+    const food = await Foods.findAll({ where: oldFood });
     if (!food) {
-      throw new Exception("Foods Not Found", 404);
+      throw new Exception("Food Not Found", 404);
     }
+    if (food.length > 1) {
+      throw new Exception("Multiple targets found. Please narrow down to one", 404);
+    }
+    const target = food[0];
 
     if (newFood.userId) {
-      food.userId = newFood.userId;
+      target.userId = newFood.userId;
     }
     if (newFood.iconId) {
-      food.iconId = newFood.iconId;
+      target.iconId = newFood.iconId;
     }
     if (newFood.placeId) {
-      food.placeId = newFood.placeId;
+      target.placeId = newFood.placeId;
     }
     if (newFood.name) {
-      food.name = newFood.name;
+      target.name = newFood.name;
     }
     if (newFood.expirationDate) {
-      food.expirationDate = newFood.expirationDate;
+      target.expirationDate = newFood.expirationDate;
     }
     if (newFood.comment) {
-      food.comment = newFood.comment;
+      target.comment = newFood.comment;
     }
 
-    const foods = await food.save();
+    const foods = await target.save();
     return foods;
   };
 
@@ -67,11 +71,16 @@ export namespace FoodsDB {
    * @returns 成功→true、 失敗→throw new Exception
    */
   export const destroy = async (condition: FoodsType) => {
-    const food = await Foods.findOne({ where: condition });
+    const food = await Foods.findAll({ where: condition });
     if (!food) {
-      throw new Exception("Foods not Found", 404);
+      throw new Exception("Food Not Found", 404);
     }
-    await food.destroy().catch(() => {
+    if (food.length > 1) {
+      throw new Exception("Multiple targets found. Please narrow down to one", 404);
+    }
+    const target = food[0];
+
+    await target.destroy().catch(() => {
       throw new Exception("Failed Delete Food Data", 404);
     });
     return true;
