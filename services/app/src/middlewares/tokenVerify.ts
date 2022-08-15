@@ -22,7 +22,9 @@ export const tokenVerify = (req: Request, _: Response, next: NextFunction) => {
     if(!hasProperty(payload, "id") || typeof payload.id !== "number"){
       throw new Exception("トークンが間違っています", 401);
     }
-    req.user.id = payload.id;
+    req.user = {
+      id: payload.id
+    }
     next();
 
   } catch (error){
