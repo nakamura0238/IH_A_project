@@ -2,7 +2,7 @@ POST http://localhost:3001/api/v1/users
 content-type: application/json
 
 {
-    "email": "test@example.com",
+    "email": "test2@example.com",
     "password": "password"
 }
 
