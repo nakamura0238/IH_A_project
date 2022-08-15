@@ -22,7 +22,7 @@ const usersUseCase = () => {
     const dbUser = users[0];
 
     // パスワード検証
-    if (false) throw new Exception("メールアドレスまたはパスワードが間違っています", 401)
+    if (!user.comparePassword(dbUser.password)) throw new Exception("メールアドレスまたはパスワードが間違っています", 401)
 
     return new UserEntity(dbUser.id as number, user.email);
   };

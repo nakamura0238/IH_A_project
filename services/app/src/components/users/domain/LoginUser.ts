@@ -1,3 +1,4 @@
+import { compareSync } from "bcrypt";
 import { Request } from "express";
 
 type ReqBody = {
@@ -22,6 +23,10 @@ class LoginUser {
 
   public get password() {
     return this._password;
+  }
+
+  public comparePassword(encrypted: string) {
+    return compareSync(this._password, encrypted)
   }
 }
 
