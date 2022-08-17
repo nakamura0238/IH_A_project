@@ -3,5 +3,5 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNjYwNTY0OTU5fQ.N1YLBGlpN3Q-PdSB6AknSQQb2sJzDcQquNjeHJkOm5U
 
 {
-
+    "name": "冷蔵庫の上"
 }

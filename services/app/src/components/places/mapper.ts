@@ -40,19 +40,23 @@ export namespace PlacesDB {
     if (newPlaces.name) {
       place.name = newPlaces.name;
     }
-    if (newPlaces.userId) {
-      place.userId = newPlaces.userId;
+    if (newPlaces.user_id) {
+      place.user_id = newPlaces.user_id;
     }
 
     return await place.save();
   };
   /**
    * INSERTメソッド
-   * @param place 登録する情報（idは入れない）
+   * @param name
+   * @param userId
    * @returns 登録後のPlacesテーブル
    */
-  export const insert = async (place: Places) => {
-    return await Places.create(place);
+  export const insert = async (name: string, userId: number) => {
+    return await Places.create({
+      name,
+      user_id: userId
+    });
   };
 
   export const destroy = async (condition: PlacesType) => {
