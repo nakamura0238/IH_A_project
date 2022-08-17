@@ -10,7 +10,9 @@ const placesRouter = (express: typeof CoreExpress) => {
         .post(tokenVerify, controller.add)
         .get(tokenVerify, controller.list)
     
-    // router.route("/:userId/places/:placeId").put().delete()
+    router.route("/:userId/places/:placeId")
+        .put(tokenVerify, controller.put)
+        .delete(tokenVerify, controller.remove)
 
     return router
 }

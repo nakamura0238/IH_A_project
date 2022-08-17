@@ -34,8 +34,13 @@ const placesUseCase = () => {
 
     }    
 
-    const remove = async () => {
-
+    const remove = async (placeId: number, userId: number) => {
+        await PlacesDB.destroy({
+            [Op.and]: [
+                { id: placeId },
+                { user_id: userId}
+            ]
+        })
     }
 
     return {

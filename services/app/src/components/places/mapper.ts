@@ -1,6 +1,6 @@
 import { Places, PlacesType } from "@/lib/Database/Places";
 import Exception from "@/lib/Exception";
-import { FindOptions } from "sequelize";
+import { FindOptions, WhereOptions } from "sequelize";
 
 /**
  * Placesテーブルを操作するための機能集
@@ -60,8 +60,8 @@ export namespace PlacesDB {
     });
   };
 
-  export const destroy = async (condition: PlacesType) => {
-    const places = await Places.findAll({ where: condition });
+  export const destroy = async (whereOptions: WhereOptions) => {
+    const places = await Places.findAll({ where: whereOptions });
 
     if (!places) {
       throw new Exception("Data Not Found", 404);

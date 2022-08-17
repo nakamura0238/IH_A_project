@@ -47,10 +47,12 @@ const placesController = () => {
     const remove = (req: Request, res: Response, next: NextFunction) => {
         (async () => {
             // リクエスト内容の受け取り
+            const { placeId } = req.params;
+            const userId = req.user!.id
 
             // 保存場所削除ユースケースの実行
+            await useCase.remove(Number(placeId), userId)
         
-            // レスポンスの返却
             res.status(200).end();
         })().catch(next)
     }
