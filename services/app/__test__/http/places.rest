@@ -1,0 +1,26 @@
+POST http://localhost:3001/api/v1/foods/1/places
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "キッチン"
+}
+
+###
+GET http://localhost:3001/api/v1/foods/1/places
+content-type: application/json
+Authorization: Bearer {{token}}
+
+###
+PUT http://localhost:3001/api/v1/foods/1/places/4
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "キッチン改造"
+}
+
+###
+DELETE http://localhost:3001/api/v1/foods/1/places/3
+content-type: application/json
+Authorization: Bearer {{token}}

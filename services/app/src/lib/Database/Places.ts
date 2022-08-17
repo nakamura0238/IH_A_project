@@ -11,7 +11,9 @@ export class Places extends Model<
   InferAttributes<Places>,
   InferCreationAttributes<Places>
 > {
+
   declare id: number;
+
   declare user_id: number;
   declare name: string;
 }
@@ -45,6 +47,6 @@ Places.belongsTo(Users, { foreignKey: "user_id" });
 
 export type PlacesType = {
   id?: number;
-  userId?: number;
+  user_id?: number;
   name?: string;
 };
