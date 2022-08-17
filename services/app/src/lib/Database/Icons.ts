@@ -3,7 +3,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   DataTypes,
-} from "sequelize/types";
+} from "sequelize";
 import sequelize from ".";
 
 export class Icons extends Model<

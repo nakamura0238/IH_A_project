@@ -3,7 +3,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
-} from "sequelize/types";
+} from "sequelize";
 import sequelize from ".";
 import { Icons } from "./Icons";
 import { Places } from "./Places";

@@ -3,7 +3,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   DataTypes,
-} from "sequelize/types";
+} from "sequelize";
 import sequelize from ".";
 import { Users } from "./Users";
 
@@ -11,8 +11,8 @@ export class Places extends Model<
   InferAttributes<Places>,
   InferCreationAttributes<Places>
 > {
-  declare id: number;
-  declare userId: number;
+  declare id: number | undefined;
+  declare user_id: number;
   declare name: string;
 }
 
@@ -24,7 +24,7 @@ Places.init(
       autoIncrement: true,
       allowNull: false,
     },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -45,6 +45,6 @@ Places.belongsTo(Users, { foreignKey: "user_id" });
 
 export type PlacesType = {
   id?: number;
-  userId?: number;
+  user_id?: number;
   name?: string;
 };
