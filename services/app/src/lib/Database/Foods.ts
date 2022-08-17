@@ -17,7 +17,7 @@ export class Foods extends Model<
   declare userId: number;
   declare iconId: number;
   declare placeId: number;
-  declare categoryId:string;
+  declare categoryId: string;
   declare name: string;
   declare expirationDate: Date;
   declare comment: string | undefined;
@@ -47,7 +47,7 @@ Foods.init(
       defaultValue: null,
       unique: true,
     },
-    categoryId:{type:DataTypes.STRING},
+    categoryId: { type: DataTypes.STRING },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
