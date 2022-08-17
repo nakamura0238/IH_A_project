@@ -21,10 +21,15 @@ export namespace CategoriesDB {
    */
 
   export const update = async (oldCategory: CategoriesType, newCategory: CategoriesType) => {
-    let target = await Categories.findOne({ where: oldCategory });
-    if (!target) {
+    let categories = await Categories.findAll({ where: oldCategory });
+    if (!categories.length) {
       throw new Exception("Category Not Found", 404);
     }
+    if (categories.length > 1) {
+      throw new Exception("Multiple targets found. Please narrow down to one", 404);
+
+    }
+    let target = categories[0]
 
     if (newCategory.id) {
       target.id = newCategory.id
@@ -33,7 +38,7 @@ export namespace CategoriesDB {
       target.name = newCategory.name
     }
     if (newCategory.iconId) {
-      target.iconId = newCategory.iconId
+      target.icon_id = newCategory.iconId
     }
 
     return await target.save();
@@ -57,6 +62,10 @@ export namespace CategoriesDB {
   export const destroy = async (condition: CategoriesType) => {
 
     const categories = await Categories.findAll({ where: condition });
+    if (!categories.length) {
+      throw new Exception("Category Not Found", 404);
+    }
+
     if (categories.length > 1) {
       throw new Exception("Multiple targets found. Please narrow down to one", 404);
     }

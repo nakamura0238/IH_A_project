@@ -27,7 +27,7 @@ export namespace PlacesDB {
   ) => {
     let places = await Places.findAll({ where: oldPlaces });
 
-    if (!places) {
+    if (!places.length) {
       throw new Exception("Data Not Found", 404);
     }
 
@@ -41,7 +41,7 @@ export namespace PlacesDB {
       place.name = newPlaces.name;
     }
     if (newPlaces.userId) {
-      place.userId = newPlaces.userId;
+      place.user_id = newPlaces.userId;
     }
 
     return await place.save();
@@ -62,7 +62,7 @@ export namespace PlacesDB {
   export const destroy = async (condition: PlacesType) => {
     const places = await Places.findAll({ where: condition });
 
-    if (!places) {
+    if (!places.length) {
       throw new Exception("Data Not Found", 404);
     }
 

@@ -22,7 +22,7 @@ export namespace FoodsDB {
    */
   export const update = async (oldFood: FoodsType, newFood: FoodsType) => {
     const food = await Foods.findAll({ where: oldFood });
-    if (!food) {
+    if (!food.length) {
       throw new Exception("Food Not Found", 404);
     }
     if (food.length > 1) {
@@ -31,19 +31,19 @@ export namespace FoodsDB {
     const target = food[0];
 
     if (newFood.userId) {
-      target.userId = newFood.userId;
+      target.user_id = newFood.userId;
     }
     if (newFood.iconId) {
-      target.iconId = newFood.iconId;
+      target.icon_id = newFood.iconId;
     }
     if (newFood.placeId) {
-      target.placeId = newFood.placeId;
+      target.place_id = newFood.placeId;
     }
     if (newFood.name) {
       target.name = newFood.name;
     }
     if (newFood.expirationDate) {
-      target.expirationDate = newFood.expirationDate;
+      target.expiration_date = newFood.expirationDate;
     }
     if (newFood.comment) {
       target.comment = newFood.comment;
@@ -72,7 +72,7 @@ export namespace FoodsDB {
    */
   export const destroy = async (condition: FoodsType) => {
     const food = await Foods.findAll({ where: condition });
-    if (!food) {
+    if (!food.length) {
       throw new Exception("Food Not Found", 404);
     }
     if (food.length > 1) {

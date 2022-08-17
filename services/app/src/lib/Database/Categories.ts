@@ -3,7 +3,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
-} from "sequelize/types";
+} from "sequelize";
 import sequelize from ".";
 import { Icons } from "./Icons";
 
@@ -12,7 +12,7 @@ export class Categories extends Model<
   InferCreationAttributes<Categories>
 > {
   declare id: string | undefined;
-  declare iconId: number;
+  declare icon_id: number;
   declare name: string;
 }
 
@@ -29,7 +29,7 @@ Categories.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    iconId: {
+    icon_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,

@@ -24,7 +24,7 @@ export namespace IconDB {
   export const update = async (oldIcon: IconType, newIcon: IconType) => {
     let icons = await Icons.findAll({ where: oldIcon });
 
-    if (!icons) {
+    if (!icons.length) {
       throw new Exception("Data Not Found", 404);
     }
 
@@ -61,7 +61,7 @@ export namespace IconDB {
   export const destroy = async (condition: IconType) => {
     let icons = await Icons.findAll({ where: condition });
 
-    if (!icons) {
+    if (!icons.length) {
       throw new Exception("Data Not Found", 404);
     }
 

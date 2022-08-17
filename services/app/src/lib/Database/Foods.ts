@@ -3,7 +3,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
-} from "sequelize/types";
+} from "sequelize";
 import sequelize from ".";
 import { Icons } from "./Icons";
 import { Places } from "./Places";
@@ -14,12 +14,12 @@ export class Foods extends Model<
   InferCreationAttributes<Foods>
 > {
   declare id: number | undefined;
-  declare userId: number;
-  declare iconId: number;
-  declare placeId: number;
-  declare categoryId: string;
+  declare user_id: number;
+  declare icon_id: number;
+  declare place_id: number;
+  declare category_id: string;
   declare name: string;
-  declare expirationDate: Date;
+  declare expiration_date: Date;
   declare comment: string | undefined;
 }
 
@@ -31,28 +31,28 @@ Foods.init(
       primaryKey: true,
       allowNull: false,
     },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
     },
-    iconId: {
+    icon_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
     },
-    placeId: {
+    place_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: null,
       unique: true,
     },
-    categoryId: { type: DataTypes.STRING },
+    category_id: { type: DataTypes.STRING },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    expirationDate: {
+    expiration_date: {
       type: DataTypes.DATE,
       allowNull: false,
     },

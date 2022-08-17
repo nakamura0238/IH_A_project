@@ -3,7 +3,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   DataTypes,
-} from "sequelize/types";
+} from "sequelize";
 import sequelize from ".";
 import { Users } from "./Users";
 
@@ -12,7 +12,7 @@ export class Places extends Model<
   InferCreationAttributes<Places>
 > {
   declare id: number;
-  declare userId: number;
+  declare user_id: number;
   declare name: string;
 }
 
@@ -24,7 +24,7 @@ Places.init(
       autoIncrement: true,
       allowNull: false,
     },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

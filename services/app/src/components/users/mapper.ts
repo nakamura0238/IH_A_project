@@ -22,7 +22,7 @@ export namespace UsersDB {
    */
   export const update = async (oldUser: UsersType, newUser: UsersType) => {
     const user = await Users.findAll({ where: oldUser });
-    if (!user) {
+    if (!user.length) {
       throw new Exception("Users Not Found", 404);
     }
     if (user.length > 1) {
@@ -36,8 +36,8 @@ export namespace UsersDB {
     if (newUser.password) {
       target.password = newUser.password;
     }
-    if (newUser.line_id) {
-      target.line_id = newUser.line_id;
+    if (newUser.lineId) {
+      target.line_id = newUser.lineId;
     }
 
     const users = await target.save();
@@ -57,7 +57,7 @@ export namespace UsersDB {
       id: user.id,
       email: user.email,
       password: user.password,
-      line_id: user.line_id,
+      line_id: user.lineId,
     };
     const [users, result] = await Users.findOrCreate({
       where: { id: user.id, email: user.email },
@@ -76,7 +76,7 @@ export namespace UsersDB {
    */
   export const destroy = async (condition: UsersType) => {
     const users = await Users.findAll({ where: condition });
-    if (!users) {
+    if (!users.length) {
       throw new Exception("Users not Found", 404);
     }
     if (users.length > 1) {
@@ -118,7 +118,7 @@ export namespace UsersDB {
    */
   export const fetchByEmail = async (email: string) => {
     let result = await select({ email });
-    if (!result) {
+    if (!result.length) {
       throw new Exception("user not found", 404);
     }
     return result;
@@ -142,19 +142,6 @@ export namespace UsersDB {
     newUser: UsersType
   ) => {
     let user = await update({ id, email }, newUser);
-    if (!user) {
-      throw new Exception("user not found", 404);
-    }
-    if (newUser.email) {
-      user.email = newUser.email;
-    }
-    if (newUser.password) {
-      user.password = newUser.password;
-    }
-    if (newUser.line_id) {
-      user.line_id = newUser.line_id;
-    }
-    const users = await user.save();
-    return users;
+    return user;
   };
 }
