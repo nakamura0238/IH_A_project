@@ -8,7 +8,7 @@ const placesRouter = (express: typeof CoreExpress) => {
 
     router.route("/:userId/places")
         .post(tokenVerify, controller.add)
-        // .get()
+        .get(tokenVerify, controller.list)
     
     // router.route("/:userId/places/:placeId").put().delete()
 

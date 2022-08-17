@@ -1,5 +1,6 @@
 import { Places, PlacesType } from "@/lib/Database/Places";
 import Exception from "@/lib/Exception";
+import { FindOptions } from "sequelize";
 
 /**
  * Placesテーブルを操作するための機能集
@@ -11,8 +12,8 @@ export namespace PlacesDB {
    * @param condition 探したい条件
    * @returns 条件に当てはまる情報の配列 引数のない場合は全ての情報
    */
-  export const select = async (condition?: PlacesType) => {
-    return await Places.findAll({ where: condition });
+  export const select = async (findOptions: FindOptions) => {
+    return await Places.findAll(findOptions);
   };
 
   /**

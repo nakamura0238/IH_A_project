@@ -19,8 +19,47 @@ const placesController = () => {
             res.status(200).send(serializer.add(result));
         })().catch(next)
     }
+
+    const list = (req: Request, res: Response, next: NextFunction) => {
+        (async () => {
+            // リクエスト内容の受け取り
+            const userId = req.user!.id
+
+            // 保存場所取得ユースケースの実行
+            const result = await useCase.list(userId);
+
+            // レスポンスの返却
+            res.status(200).send(serializer.list(result));
+        })().catch(next)
+    }
+
+    const put = (req: Request, res: Response, next: NextFunction) => {
+        (async () => {
+            // リクエスト内容の受け取り
+
+            // 保存場所更新ユースケースの実行
+
+            // レスポンスの返却
+            res.status(200).end();
+        })().catch(next)
+    }
+
+    const remove = (req: Request, res: Response, next: NextFunction) => {
+        (async () => {
+            // リクエスト内容の受け取り
+
+            // 保存場所削除ユースケースの実行
+        
+            // レスポンスの返却
+            res.status(200).end();
+        })().catch(next)
+    }
+
     return {
-        add
+        add,
+        list,
+        put,
+        remove
     }
 }
 

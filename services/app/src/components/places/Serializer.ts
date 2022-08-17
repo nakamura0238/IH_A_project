@@ -8,6 +8,17 @@ class PlacesSerializer extends Serializer {
             name: entity.name
         }
     }
+
+    list (entities: PlaceEntity[]) {
+        return {
+            places: entities.map((entity) => {
+                return {
+                    id: entity.id,
+                    name: entity.name
+                }
+            })
+        }
+    }
 }
 
 export default PlacesSerializer
