@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import AddPlace from "./domain/AddPlace"
+import PutPlace from "./domain/PutPlace";
 import PlacesSerializer from "./Serializer";
 import placesUseCase from "./useCase"
 
@@ -36,11 +37,13 @@ const placesController = () => {
     const put = (req: Request, res: Response, next: NextFunction) => {
         (async () => {
             // リクエスト内容の受け取り
+            const putPlace = new PutPlace(req);
 
             // 保存場所更新ユースケースの実行
+            const result = await useCase.update(putPlace);
 
             // レスポンスの返却
-            res.status(200).end();
+            res.status(200).send(serializer.put(result));
         })().catch(next)
     }
 
@@ -50,6 +53,7 @@ const placesController = () => {
             const { placeId } = req.params;
             const userId = req.user!.id
 
+            // 食材の保存場所変更ユースケースの実行
             // 保存場所削除ユースケースの実行
             await useCase.remove(Number(placeId), userId)
         

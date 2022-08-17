@@ -1,4 +1,4 @@
-import { Places, PlacesType } from "@/lib/Database/Places";
+import { Places } from "@/lib/Database/Places";
 import Exception from "@/lib/Exception";
 import { FindOptions, WhereOptions } from "sequelize";
 
@@ -18,32 +18,22 @@ export namespace PlacesDB {
 
   /**
    * UPDATEメソッド
-   * @param oldPlaces 探したい条件データ
-   * @param newPlaces 更新したいデータ
+   * @param whereOptions
+   * @param name
    * @returns 更新後の情報
    */
   export const update = async (
-    oldPlaces: PlacesType,
-    newPlaces: PlacesType
+    whereOptions: WhereOptions,
+    name: string,
   ) => {
-    let places = await Places.findAll({ where: oldPlaces });
+    const places = await Places.findAll({
+      where: whereOptions
+    })
 
-    if (!places) {
-      throw new Exception("Data Not Found", 404);
-    }
-
-    if (places.length > 1) {
-      throw new Exception("Some Data Found", 404);
-    }
+    if (!places || places.length < 1) throw new Exception("Data Not Found", 404);
 
     const place = places[0];
-
-    if (newPlaces.name) {
-      place.name = newPlaces.name;
-    }
-    if (newPlaces.user_id) {
-      place.user_id = newPlaces.user_id;
-    }
+    place.name = name
 
     return await place.save();
   };
@@ -67,7 +57,7 @@ export namespace PlacesDB {
       throw new Exception("Data Not Found", 404);
     }
 
-    if (places.length > 1) {
+    if (places.length < 1) {
       throw new Exception("Some Data Found", 404);
     }
 

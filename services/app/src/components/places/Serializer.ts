@@ -19,6 +19,13 @@ class PlacesSerializer extends Serializer {
             })
         }
     }
+
+    put (entity: PlaceEntity) {
+        return {
+            id: entity.id,
+            name: entity.name
+        }
+    }
 }
 
 export default PlacesSerializer

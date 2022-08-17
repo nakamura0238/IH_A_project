@@ -2,6 +2,7 @@ import AddPlace from "./domain/AddPlace";
 import PlaceEntity from "./entity";
 import { PlacesDB } from "./mapper";
 import { Op } from "sequelize"
+import PutPlace from "./domain/PutPlace";
 
 const placesUseCase = () => {
     const insert = async (place: AddPlace) => {
@@ -30,8 +31,15 @@ const placesUseCase = () => {
         return entities;
     }  
     
-    const update = async () => {
+    const update = async (place: PutPlace) => {
+        await PlacesDB.update({
+            [Op.and]: [
+                { id: place.id },
+                { user_id: place.userId }
+            ]
+        }, place.name)
 
+        return new PlaceEntity(place.id, place.name, place.userId)
     }    
 
     const remove = async (placeId: number, userId: number) => {
