@@ -127,17 +127,17 @@ POST /users/login
 
 #### URL
 
-POST /foods/:userId
+POST /foods
 
 #### リクエストボディ
 
 ```json
 {
   "name": "お肉",
-  "expirationDate": Date,
+  "expirationDate": 1666....,
   "comment": "美味しいよ",
   "placeId": 1,
-  "iconId": 1
+  "categoryId": "10-275"
 }
 ```
 
@@ -153,7 +153,7 @@ POST /foods/:userId
 
 #### URL
 
-GET /foods/:userId
+GET /foods
 
 #### レスポンス
 
@@ -171,7 +171,7 @@ GET /foods/:userId
 
 #### URL
 
-PUT /foods/:userId/:foodId
+PUT /foods/:foodId
 
 #### リクエストボディ
 
@@ -195,13 +195,13 @@ userId 以外
 
 #### URL
 
-DELETE /foods/:userId/:foodId
+DELETE /foods/:foodId
 
 ### 保存場所の登録
 
 #### URL
 
-POST /foods/:userId/places
+POST /foods/places
 
 #### リクエストボディ
 
@@ -224,7 +224,7 @@ POST /foods/:userId/places
 
 #### URL
 
-GET /foods/:userId/places
+GET /foods/places
 
 #### レスポンス
 
@@ -242,7 +242,7 @@ GET /foods/:userId/places
 
 #### URL
 
-PUT /foods/:userId/places/:placeId
+PUT /foods/places/:placeId
 
 #### リクエストボディ
 
@@ -256,7 +256,7 @@ PUT /foods/:userId/places/:placeId
 
 #### URL
 
-DELETE /foods/:userId/places/:placeId
+DELETE /foods/places/:placeId
 
 ### アイコン一覧の取得
 
@@ -270,9 +270,12 @@ GET /foods/icons
 {
   "icons": [
     {
-      "id": -1,
-      "name": "お肉",
-      "url": "https://example.com/oniku.png"
+      ...icon
+    }
+  ],
+  "categories": [
+    {
+      ...category
     }
   ]
 }

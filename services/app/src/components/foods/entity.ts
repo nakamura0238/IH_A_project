@@ -1,13 +1,13 @@
 class FoodEntity {
   public constructor(
     public readonly id: number,
-    public readonly user_id: number,
-    public readonly icon_id?: number,
-    public readonly place_id?: number,
-    public readonly name?: string,
-    public readonly expiration_date?: Date,
-    public readonly comment?: string
-  ) {}
+    public readonly name: string,
+    public readonly expirationDate: number,
+    public readonly comment: string,
+    public readonly placeId: number,
+    public readonly categoryId: string,
+    public readonly userId: number
+  ) { }
 }
 
 export default FoodEntity;

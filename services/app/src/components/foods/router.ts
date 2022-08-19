@@ -1,3 +1,4 @@
+import tokenVerify from "@/middlewares/tokenVerify";
 import type CoreExpress from "express";
 import foodsController from "./controller";
 
@@ -5,10 +6,15 @@ const foodsRouter = (express: typeof CoreExpress) => {
   const router = express.Router();
   const controller = foodsController();
 
-  router.route("/foods/:userId").get(controller.foodList);
-  router.route("/foods/:userId").post(controller.foodAdd);
-  router.route("/foods/:userId/:foodId").put(controller.foodUpdate);
-  router.route("/foods/:userId/:foodId").delete(controller.foodTrash);
+  router
+    .route("/")
+    .get(tokenVerify, controller.list)
+    .post(tokenVerify, controller.add);
+
+  router
+    .route("/:foodId")
+    .put(tokenVerify, controller.update)
+    .delete(tokenVerify, controller.remove);
 
   return router;
 };

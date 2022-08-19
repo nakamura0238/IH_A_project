@@ -1,5 +1,6 @@
 import { Foods, FoodsType } from "@/lib/Database/Foods";
 import Exception from "@/lib/Exception";
+import { FindOptions, WhereOptions } from "sequelize";
 
 /**
  * Foodsテーブルを操作するための機能集
@@ -7,49 +8,47 @@ import Exception from "@/lib/Exception";
 export namespace FoodsDB {
   /**
    *SELECTメソッド
-   * @param condition 探したい条件
+   * @param options 探したい条件
    * @returns 条件に当てはまる情報の配列 引数のない場合は全ての情報
    */
-  export const select = async (condition?: FoodsType) => {
-    return await Foods.findAll({ where: condition });
+  export const select = async (options: FindOptions) => {
+    return await Foods.findAll(options);
   };
 
   /**
    * UPDATEメソッド
-   * @param oldFood 探したい条件データ
+   * @param whereOptions 探したい条件データ
    * @param newFood 更新したいデータ
    * @returns 更新後の情報
    */
-  export const update = async (oldFood: FoodsType, newFood: FoodsType) => {
-    const food = await Foods.findAll({ where: oldFood });
-    if (!food.length) {
-      throw new Exception("Food Not Found", 404);
+  export const update = async (
+    whareOptions: WhereOptions,
+    newFood: FoodsType
+  ) => {
+    const food = await Foods.findOne({ where: whareOptions });
+    if (!food) {
+      throw new Exception("Foods Not Found", 404);
     }
-    if (food.length > 1) {
-      throw new Exception("Multiple targets found. Please narrow down to one", 404);
-    }
-    const target = food[0];
-
     if (newFood.userId) {
-      target.user_id = newFood.userId;
+      food.user_id = newFood.userId;
     }
     if (newFood.categoryId) {
-      target.category_id = newFood.categoryId;
+      food.category_id = newFood.categoryId;
     }
     if (newFood.placeId) {
-      target.place_id = newFood.placeId;
+      food.place_id = newFood.placeId;
     }
     if (newFood.name) {
-      target.name = newFood.name;
+      food.name = newFood.name;
     }
     if (newFood.expirationDate) {
-      target.expiration_date = newFood.expirationDate;
+      food.expiration_date = newFood.expirationDate;
     }
     if (newFood.comment) {
-      target.comment = newFood.comment;
+      food.comment = newFood.comment;
     }
 
-    const foods = await target.save();
+    const foods = await food.save();
     return foods;
   };
 
@@ -59,7 +58,15 @@ export namespace FoodsDB {
    * @returns 登録後のFoodsテーブル
    */
   export const insert = async (food: Foods) => {
-    const foods = await Foods.create(food).catch(() => {
+    const foods = await Foods.create({
+      name: food.name,
+      expiration_date: food.expiration_date,
+      comment: food.comment,
+      category_id: food.category_id,
+      place_id: food.place_id,
+      user_id: food.user_id,
+    }).catch((e) => {
+      console.log(e);
       throw new Exception("Failed Insert New Food", 404);
     });
     return foods;
@@ -67,20 +74,15 @@ export namespace FoodsDB {
 
   /**
    * DELETE(destroy)メソッド
-   * @param condition 探したい条件データ
+   * @param whereOptions 探したい条件データ
    * @returns 成功→true、 失敗→throw new Exception
    */
-  export const destroy = async (condition: FoodsType) => {
-    const food = await Foods.findAll({ where: condition });
-    if (!food.length) {
-      throw new Exception("Food Not Found", 404);
+  export const destroy = async (whereOptions: WhereOptions) => {
+    const food = await Foods.findOne({ where: whereOptions });
+    if (!food) {
+      throw new Exception("Foods not Found", 404);
     }
-    if (food.length > 1) {
-      throw new Exception("Multiple targets found. Please narrow down to one", 404);
-    }
-    const target = food[0];
-
-    await target.destroy().catch(() => {
+    await food.destroy().catch(() => {
       throw new Exception("Failed Delete Food Data", 404);
     });
     return true;

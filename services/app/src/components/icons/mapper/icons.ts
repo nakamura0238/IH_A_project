@@ -12,7 +12,7 @@ export namespace IconDB {
    * @returns 条件に当てはまる情報の配列 引数のない場合は全ての情報
    */
   export const select = async (condition?: IconType) => {
-    return await Icons.findAll({ where: condition });
+    return await Icons.findAll();
   };
 
   /**

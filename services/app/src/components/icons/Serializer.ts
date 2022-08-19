@@ -1,11 +1,24 @@
+import { Categories } from "@/lib/Database/Categories";
+import { Icons } from "@/lib/Database/Icons";
 import Serializer from "@/lib/Serializer";
-import { toCamelCaseObject } from "@/lib/util";
 
 class IconsSerializer extends Serializer {
-    list(icons: any[]) {
-        // TODO: anyを変更
+    list(icons: Icons[], categories: Categories[]) {
         return {
-            icons: toCamelCaseObject(icons)
+            icons: icons.map((icon) => {
+                return {
+                    id: icon.id,
+                    category: icon.category,
+                    imagePath: icon.image_path
+                }
+            }),
+            categories: categories.map((category) => {
+                return {
+                    id: category.id,
+                    name: category.name,
+                    iconId: category.icon_id
+                }
+            })
         }
     }
 }
