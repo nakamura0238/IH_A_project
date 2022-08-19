@@ -137,7 +137,7 @@ POST /foods
   "expirationDate": 1666....,
   "comment": "美味しいよ",
   "placeId": 1,
-  "iconId": 1
+  "categoryId": "10-275"
 }
 ```
 
@@ -270,9 +270,12 @@ GET /foods/icons
 {
   "icons": [
     {
-      "id": -1,
-      "name": "お肉",
-      "url": "https://example.com/oniku.png"
+      ...icon
+    }
+  ],
+  "categories": [
+    {
+      ...category
     }
   ]
 }
