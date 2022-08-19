@@ -1,72 +1,67 @@
-import {Request, Response, NextFunction } from 'express';
-import FoodAdd from './domain/FoodAdd';
-import FoodList from './domain/FoodList';
-import FoodTrash from './domain/FoodTrash';
-import FoodUpdate from './domain/FoodUpdate';
-import FoodsSerializer from './Serializer';
-import foodsUseCase from './useCase';
+import { NextFunction, Request, Response } from "express";
+import AddFood from "./domain/AddFood";
+import PutFood from "./domain/PutFood";
+import FoodsSerializer from "./Serializer";
+import foodsUseCase from "./useCase";
 
 const foodsController = () => {
   const serializer = new FoodsSerializer();
   const useCase = foodsUseCase();
 
-  //食材一覧
-  const foodList = (req: Request, res: Response, next:NextFunction) => {
-    (async() => {
+  const add = (req: Request, res: Response, next: NextFunction) => {
+    (async () => {
       // リクエスト内容の受け取り
-      const foodList = new FoodList(req);
-      
-      // 食品risutoユースケースの実行
-      const result = await useCase.foodList(foodList);
+      const food = new AddFood(req);
+
+      // ユースケースの実行
+      const result = await useCase.insert(food);
 
       // レスポンスの返却
-      res.status(200).send(serializer.foodList(result));
+      res.status(200).send(serializer.add(result));
     })().catch(next);
   };
 
-  //食材登録
-  const foodAdd = (req: Request, res: Response, next: NextFunction) => {
-    (async() => {
+  const list = (req: Request, res: Response, next: NextFunction) => {
+    (async () => {
       // リクエスト内容の受け取り
-      const foodAdd = new FoodAdd(req);
+      const userId = req.user!.id;
 
-      // 食材登録ユースケースの実行
-      const result = await useCase.foodAdd(foodAdd);
+      // ユースケースの実行
+      const result = await useCase.select(userId);
 
       // レスポンスの返却
-      res.status(200).send(serializer.foodAdd(result));
+      res.status(200).send(serializer.list(result));
     })().catch(next);
   };
 
-  //食材更新
-  const foodUpdate = (req: Request, res: Response, next: NextFunction) => {
-    (async() => {
+  const update = (req: Request, res: Response, next: NextFunction) => {
+    (async () => {
       // リクエスト内容の受け取り
-      const foodUpdate = new FoodUpdate(req);
+      const food = new PutFood(req);
 
-      // 食材登録ユースケースの実行
-      const result = await useCase.foodUpdate(foodUpdate);
+      // ユースケースの実行
+      const result = await useCase.update(food);
 
       // レスポンスの返却
-      res.status(200).send(serializer.foodUpdate(result));
+      res.status(200).send(serializer.update(result));
     })().catch(next);
   };
 
-  //食材削除
-  const foodTrash = (req: Request, res: Response, next: NextFunction) => {
-    (async() => {
+  const remove = (req: Request, res: Response, next: NextFunction) => {
+    (async () => {
       // リクエスト内容の受け取り
-      const foodTrash = new FoodTrash(req);
+      const userId = req.user!.id;
+      const { foodId } = req.params;
 
-      // 食材登録ユースケースの実行
-      const result = await useCase.foodTrash(foodTrash);
+      // ユースケースの実行
+      await useCase.remove(userId, Number(foodId));
 
       // レスポンスの返却
-      res.status(200).send(serializer.foodTrash(result));
+      res.status(200).end();
     })().catch(next);
   };
 
-  return { foodList, foodAdd, foodUpdate, foodTrash };
+  return { add, list, update, remove };
 };
 
 export default foodsController;

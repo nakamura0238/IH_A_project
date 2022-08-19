@@ -1,65 +1,93 @@
-import FoodAdd from "./domain/FoodAdd";
-import FoodList from './domain/FoodList';
-import FoodTrash from './domain/FoodTrash';
-import FoodUpdate from './domain/FoodUpdate';
+import { Foods } from "@/lib/Database/Foods";
+import { Op } from "sequelize";
+import AddFood from "./domain/AddFood";
+import PutFood from "./domain/PutFood";
 import FoodEntity from "./entity";
+import { FoodsDB } from "./mapper";
 
 const foodsUseCase = () => {
+  const insert = async (food: AddFood) => {
+    const instance = Foods.build({
+      name: food.name,
+      expiration_date: food.expirationDate.toString(),
+      comment: food.comment,
+      place_id: food.placeId,
+      category_id: food.categoryId,
+      user_id: food.userId,
+    });
+    const registerFood = await FoodsDB.insert(instance);
 
-
-  const foodList = async (food: FoodList) => {
-
-    // ユーザーの取得
-
-    // 時刻
-    const d = new Date("2020, 1, 2, 3, 4, 4");
-
-    // データベース一覧表示
-
-
-    return [new FoodEntity(-1, food.user_id, -1, -1, 
-      "ビーフ", d, "rotten")];
+    return new FoodEntity(
+      registerFood.id!,
+      registerFood.name,
+      Number(registerFood.expiration_date),
+      registerFood.comment,
+      registerFood.place_id,
+      registerFood.category_id,
+      registerFood.user_id
+    );
   };
 
+  const select = async (userId: number) => {
+    const foods = await FoodsDB.select({
+      where: {
+        user_id: userId,
+      },
+      order: [
+        ["place_id", "ASC"],
+        ["id", "ASC"],
+      ],
+    });
 
-  // 食品追加処理
-  const foodAdd = async (food: FoodAdd) => {
+    const entities: FoodEntity[] = [];
+    foods.forEach((food) => {
+      const entity = new FoodEntity(
+        food.id!,
+        food.name,
+        Number(food.expiration_date),
+        food.comment,
+        food.place_id,
+        food.category_id,
+        food.user_id
+      );
+      entities.push(entity);
+    });
+    return entities;
+  };
 
-    // 新規食品情報の取得
+  const update = async (food: PutFood) => {
+    await FoodsDB.update(
+      {
+        [Op.and]: [{ id: food.id }, { user_id: food.userId }],
+      },
+      {
+        name: food.name,
+        expirationDate: food.expirationDate.toString(),
+        comment: food.comment,
+        placeId: food.placeId,
+        categoryId: food.categoryId,
+        userId: food.userId,
+      }
+    );
 
-    // データベース登録
+    return new FoodEntity(
+      food.id,
+      food.name,
+      food.expirationDate,
+      food.comment,
+      food.placeId,
+      food.categoryId,
+      food.userId
+    );
+  };
 
+  const remove = async (userId: number, foodId: number) => {
+    await FoodsDB.destroy({
+      [Op.and]: [{ id: foodId }, { user_id: userId }],
+    });
+  };
 
-    return new FoodEntity(food.id, food.user_id, food.icon_id, food.place_id, 
-      food.name, food.expiration_date, food.comment);
-    };
-
-
-    // 食材更新処理
-    const foodUpdate = async (food: FoodUpdate) => {
-  
-      // 更新食品情報の取得
-  
-      // データベース更新
-  
-
-      return new FoodEntity(food.id, food.user_id, food.icon_id, food.place_id, 
-        food.name, food.expiration_date, food.comment);
-    };
-
-
-    // 食材削除処理
-    const foodTrash = async (food: FoodTrash) => {
-  
-      // haiki食品情報の取得
-  
-      // データベース削除
-
-      
-      return new FoodEntity(food.id, food.user_id);
-    };
-
-  return { foodList, foodAdd, foodUpdate, foodTrash };
+  return { insert, select, update, remove };
 };
 
 export default foodsUseCase;

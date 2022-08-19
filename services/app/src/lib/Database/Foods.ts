@@ -18,8 +18,8 @@ export class Foods extends Model<
   declare place_id: number;
   declare category_id: string;
   declare name: string;
-  declare expiration_date: Date;
-  declare comment: string | undefined;
+  declare expiration_date: string;
+  declare comment: string;
 }
 
 Foods.init(
@@ -50,7 +50,7 @@ Foods.init(
       allowNull: false,
     },
     expiration_date: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     comment: {
@@ -77,6 +77,6 @@ export type FoodsType = {
   categoryId?: string;
   placeId?: number;
   name?: string;
-  expirationDate?: Date;
+  expirationDate?: string;
   comment?: string;
 };

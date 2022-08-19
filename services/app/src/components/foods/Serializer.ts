@@ -2,38 +2,28 @@ import Serializer from "@/lib/Serializer";
 import FoodEntity from "./entity";
 
 class FoodsSerializer extends Serializer {
-  foodList(entity: FoodEntity[]) {
+  add(entity: FoodEntity) {
+    const { id, name, expirationDate, comment, categoryId, placeId } = entity;
     return {
-      foods: entity
+      id,
+      name,
+      expirationDate,
+      comment,
+      categoryId,
+      placeId,
     };
   }
-  foodAdd(entity: FoodEntity) {
+
+  list(entities: FoodEntity[]) {
     return {
-      id: entity.id,
-      user_id: entity.user_id,
-      icon_id: entity.icon_id,
-      place_id: entity.place_id,
-      name: entity.name,
-      expiration_date: entity.expiration_date,
-      comment: entity.comment
+      foods: entities.map((entity) => {
+        return this.add(entity);
+      }),
     };
   }
-  foodUpdate(entity: FoodEntity) {
-    return {
-      id: entity.id,
-      user_id: entity.user_id,
-      icon_id: entity.icon_id,
-      place_id: entity.place_id,
-      name: entity.name,
-      expiration_date: entity.expiration_date,
-      comment: entity.comment
-    };
-  }
-  foodTrash(entity: FoodEntity) {
-    return {
-      id: entity.id,
-      user_id: entity.user_id
-    };
+
+  update(entity: FoodEntity) {
+    return this.add(entity);
   }
 }
 
