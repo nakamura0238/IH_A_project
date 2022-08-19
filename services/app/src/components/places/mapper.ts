@@ -56,6 +56,7 @@ export namespace PlacesDB {
       user_id: userId
     });
   };
+
   /**
  * DELETE(destroy)メソッド
  * @param whereOptions 探したい条件データ
