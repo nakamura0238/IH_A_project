@@ -33,7 +33,7 @@ Icons.init(
     },
   },
   {
-    tableName: "foods",
+    tableName: "icons",
     sequelize, // passing the `sequelize` instance is required
     freezeTableName: true,
     timestamps: false,

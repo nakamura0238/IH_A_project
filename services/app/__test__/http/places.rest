@@ -12,7 +12,7 @@ content-type: application/json
 Authorization: Bearer {{token}}
 
 ###
-PUT http://localhost:3001/api/v1/foods/places/7
+PUT http://localhost:3001/api/v1/foods/places/4
 content-type: application/json
 Authorization: Bearer {{token}}
 

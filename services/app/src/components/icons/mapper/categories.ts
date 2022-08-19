@@ -1,15 +1,16 @@
 import { Categories, CategoriesType } from "@/lib/Database/Categories";
 import Exception from "@/lib/Exception";
+import { FindOptions } from "sequelize";
 
 export namespace CategoriesDB {
 
   /**
    * Selectメソッド
-   * @param condition 探す条件
+   * @param options 探す条件
    * @returns 条件に当てはまる情報の配列 引数のない場合は全ての情報
    */
-  export const select = async (condition?: CategoriesType) => {
-    return await Categories.findAll({ where: condition });
+  export const select = async (options?: FindOptions) => {
+    return await Categories.findAll(options);
   }
 
 

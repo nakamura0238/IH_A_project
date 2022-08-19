@@ -9,10 +9,10 @@ const usersUseCase = () => {
     // 重複の検証
     const count = await UsersDB.count(user.email);
     if (count >= 1) throw new Exception("そのメールアドレスはすでに登録されています", 400);
-    
+
     // データベース登録
     const registerUser = await UsersDB.register(user.email, user.password);
-    
+
     return new UserEntity(registerUser.id as number, registerUser.email);
   };
 

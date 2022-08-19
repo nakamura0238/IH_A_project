@@ -60,7 +60,7 @@ export namespace UsersDB {
       line_id: user.lineId,
     };
     const [users, result] = await Users.findOrCreate({
-      where: { id: user.id, email: user.email },
+      where: { email: user.email },
       defaults: userdata,
     });
     if (!result) {

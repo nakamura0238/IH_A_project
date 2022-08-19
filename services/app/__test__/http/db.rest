@@ -1,4 +1,0 @@
-### atodekesu
-GET http://localhost:3001/db
-
-# GET http://localhost:3001/db/create
