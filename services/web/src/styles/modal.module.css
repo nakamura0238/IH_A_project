@@ -1,0 +1,30 @@
+.overlay {
+  display: grid;
+  place-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80%;
+  width: 70%;
+  padding: 5%;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 90%;
+  padding: 10px 0;
+}

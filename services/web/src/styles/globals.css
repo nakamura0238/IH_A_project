@@ -13,4 +13,9 @@ a {
 
 * {
   box-sizing: border-box;
+  /* border: 1px solid #ff0000; */
+}
+
+p {
+  margin: 0;
 }

@@ -18,9 +18,9 @@
 
 .button{
   border-radius: 50%;
-  border: 3px solid #FFD38D;
+  border: 2px solid #FFD38D;
   background-color: #fff;
-  padding: 20px;
+  padding: 5px;
 
 }
 .button:hover{

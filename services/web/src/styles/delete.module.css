@@ -1,0 +1,10 @@
+.itemContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 10%;
+}
+
+.item {
+  border: 1px solid #333333;
+  padding: 3px;
+}

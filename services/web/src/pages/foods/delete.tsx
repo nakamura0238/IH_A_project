@@ -1,58 +1,85 @@
+import axios from "axios"
+import React, { ReactNode } from "react"
+import Layout from "../../components/Layout"
+import styles from "../../styles/delete.module.css"
+
 const Delete = () => {
+
+  type option = {
+    id: number,
+    name: string,
+  }
+
+    type deleteId = {
+      id: number
+    }
+
+  const options: option[] = [
+    {id: 1, name: "test1",},
+    {id: 2, name: "test2",},
+    {id: 3, name: "test3",},
+    {id: 4, name: "test4",},
+  ]
+
+  const lineDelete = async () => {
+    console.log("期限切れを削除")
+  }
+
+  const lsitDelete = async () => {
+    const list: any = document.getElementsByName("checkbox")
+
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].checked) {
+        // 削除API
+        const url = `localhost/foods/${list[i].value}`
+        // const foodDelete = await axios.delete(url)
+        console.log(url)
+
+      }
+    } 
+
+    // リスト再取得
+    const url = "localhost/foods"
+    // const itemList = await axios.get(url)
+
+  }
+
   return (
     <>
+      <Layout>
       <h1>食材削除</h1>
 
       <div className='delete'>
-          <h1>削除ページ</h1>
-          <nav>
-            <p>消費期限</p>
-            <p>食材種類</p>
-            <p>保存場所</p>
-          </nav>
-          <table>
-            <thead>
-            <tr>
-                <th >食材名</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>
-                <input type="checkbox"/>
-              </td>
-            </tr>
+        <div className={styles.itemContainer}>
+          {options.map((val, i) => {
+            return (
+              <label key={i}>
+                <div className={styles.item}>
+                  <input type="checkbox" name="checkbox" value={val.id} />
+                  {val.name}
+                </div>
+              </label>
+            )
+          })}
+        </div>
 
-            <tr>
-              <td>
-                <input type="checkbox"/>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox"/>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox"/>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox"/>
-              </td>
-            </tr>
-
-            </tbody>
-          </table>
-          <form>
-            <button>期限切れ削除</button>
-            <button>選択したものを削除</button>
-          </form>
+            <button onClick={lineDelete}>期限切れ削除</button>
+            <button onClick={lsitDelete}>選択したものを削除</button>
       </div>
+        
+      </Layout>
     </>
   )
 }
 
 export default Delete
+
+
+export const getServerSideProps = async () => {
+  
+  return {
+    props: {
+      data: "getServerSidePropsから受け取った"
+    },
+  };
+}
