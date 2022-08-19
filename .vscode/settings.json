@@ -19,7 +19,15 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "csscomb.formatOnSave": true,
   "csscomb.preset": "./.vscode/mycsscomb.json",
+<<<<<<< HEAD
   "[typescript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
+=======
+  "rest-client.environmentVariables": {
+    "$shared": {
+      // JWTの秘密鍵がデフォルト時のトークンです
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNjYwNTY0OTU5fQ.N1YLBGlpN3Q-PdSB6AknSQQb2sJzDcQquNjeHJkOm5U"
+    }
+>>>>>>> upstream/develop
   }
 }
