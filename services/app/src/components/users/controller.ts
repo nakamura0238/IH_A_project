@@ -1,3 +1,4 @@
+import { signToken } from "@/lib/Token";
 import { NextFunction, Request, Response } from "express";
 import LoginUser from "./domain/LoginUser";
 import SignupUser from "./domain/SignupUser";
@@ -28,8 +29,13 @@ const usersController = () => {
 
       // ログインユースケースの実行
       const result = await useCase.login(loginUser);
+
       // トークン生成
-      const token = "authentication token";
+      const payload = {
+        id: result.id,
+        email: result.email
+      }
+      const token = signToken(payload);
 
       // レスポンスの返却
       res.status(200).send(serializer.login(result, token));

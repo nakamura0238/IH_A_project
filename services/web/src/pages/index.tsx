@@ -114,8 +114,8 @@ const Home = (props: propsType) => {
       </main>
 
     </div>
-  )
-}
+  );
+};
 
 export default Home
 

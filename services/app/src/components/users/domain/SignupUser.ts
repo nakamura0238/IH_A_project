@@ -1,5 +1,6 @@
 import Exception from "@/lib/Exception";
 import { Request } from "express";
+import { hashSync } from "bcrypt";
 
 type ReqBody = {
   email: string;
@@ -36,7 +37,7 @@ class SignupUser {
   }
 
   public get password() {
-    return this._password;
+    return hashSync(this._password, 10);
   }
 }
 
