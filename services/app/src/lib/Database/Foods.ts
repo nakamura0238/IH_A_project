@@ -5,7 +5,7 @@ import {
   Model,
 } from "sequelize";
 import sequelize from ".";
-import { Icons } from "./Icons";
+import { Categories } from "./Categories";
 import { Places } from "./Places";
 import { Users } from "./Users";
 
@@ -15,7 +15,6 @@ export class Foods extends Model<
 > {
   declare id: number | undefined;
   declare user_id: number;
-  declare icon_id: number;
   declare place_id: number;
   declare category_id: string;
   declare name: string;
@@ -36,18 +35,16 @@ Foods.init(
       allowNull: false,
       unique: true,
     },
-    icon_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true,
-    },
     place_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: null,
       unique: true,
     },
-    category_id: { type: DataTypes.STRING },
+    category_id: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -72,12 +69,12 @@ Foods.init(
 
 Foods.belongsTo(Users, { foreignKey: "user_id" });
 Foods.belongsTo(Places, { foreignKey: "place_id" });
-Foods.belongsTo(Icons, { foreignKey: "icon_id" });
+Foods.belongsTo(Categories, { foreignKey: "category_id" });
 
 export type FoodsType = {
   id?: number;
   userId?: number;
-  iconId?: number;
+  categoryId?: string;
   placeId?: number;
   name?: string;
   expirationDate?: Date;

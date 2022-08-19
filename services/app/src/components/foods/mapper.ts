@@ -33,8 +33,8 @@ export namespace FoodsDB {
     if (newFood.userId) {
       target.user_id = newFood.userId;
     }
-    if (newFood.iconId) {
-      target.icon_id = newFood.iconId;
+    if (newFood.categoryId) {
+      target.category_id = newFood.categoryId;
     }
     if (newFood.placeId) {
       target.place_id = newFood.placeId;
