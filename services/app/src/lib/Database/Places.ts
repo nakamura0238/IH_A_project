@@ -11,6 +11,7 @@ export class Places extends Model<
   InferAttributes<Places>,
   InferCreationAttributes<Places>
 > {
+
   declare id: number | undefined;
   declare user_id: number;
   declare name: string;

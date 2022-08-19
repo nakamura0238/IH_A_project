@@ -5,7 +5,7 @@ import {
   Model,
 } from "sequelize";
 import sequelize from ".";
-import { Icons } from "./Icons";
+import { Categories } from "./Categories";
 import { Places } from "./Places";
 import { Users } from "./Users";
 
@@ -14,11 +14,11 @@ export class Foods extends Model<
   InferCreationAttributes<Foods>
 > {
   declare id: number | undefined;
-  declare userId: number;
-  declare iconId: number;
-  declare placeId: number;
+  declare user_id: number;
+  declare place_id: number;
+  declare category_id: string;
   declare name: string;
-  declare expirationDate: Date;
+  declare expiration_date: Date;
   declare comment: string | undefined;
 }
 
@@ -30,27 +30,26 @@ Foods.init(
       primaryKey: true,
       allowNull: false,
     },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
     },
-    iconId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true,
-    },
-    placeId: {
+    place_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: null,
       unique: true,
     },
+    category_id: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    expirationDate: {
+    expiration_date: {
       type: DataTypes.DATE,
       allowNull: false,
     },
@@ -70,12 +69,12 @@ Foods.init(
 
 Foods.belongsTo(Users, { foreignKey: "user_id" });
 Foods.belongsTo(Places, { foreignKey: "place_id" });
-Foods.belongsTo(Icons, { foreignKey: "icon_id" });
+Foods.belongsTo(Categories, { foreignKey: "category_id" });
 
 export type FoodsType = {
   id?: number;
   userId?: number;
-  iconId?: number;
+  categoryId?: string;
   placeId?: number;
   name?: string;
   expirationDate?: Date;

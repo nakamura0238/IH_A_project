@@ -30,10 +30,17 @@ export namespace PlacesDB {
       where: whereOptions
     })
 
-    if (!places || places.length < 1) throw new Exception("Data Not Found", 404);
+    if (!places.length) {
+      throw new Exception("Data Not Found", 404);
+    }
+
+    if (places.length > 1) {
+      throw new Exception("Multiple targets found. Please narrow down to one", 404);
+    }
 
     const place = places[0];
-    place.name = name
+
+    place.name = name;
 
     return await place.save();
   };
@@ -50,25 +57,27 @@ export namespace PlacesDB {
     });
   };
 
+  /**
+ * DELETE(destroy)メソッド
+ * @param whereOptions 探したい条件データ
+ * @returns 成功→true、 失敗→throw new Exception
+ */
   export const destroy = async (whereOptions: WhereOptions) => {
     const places = await Places.findAll({ where: whereOptions });
 
-    if (!places) {
+    if (!places.length) {
       throw new Exception("Data Not Found", 404);
     }
 
-    if (places.length < 1) {
-      throw new Exception("Some Data Found", 404);
+    if (places.length > 1) {
+      throw new Exception("Multiple targets found. Please narrow down to one", 404);
     }
 
     const place = places[0];
-    place
-      .destroy()
-      .then(() => {
-        return true;
-      })
+    await place.destroy()
       .catch(() => {
         throw new Exception("Failed Delete Data", 404);
       });
+    return true
   };
 }

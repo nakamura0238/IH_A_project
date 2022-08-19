@@ -3,7 +3,6 @@ import {
   Model,
   InferAttributes,
   InferCreationAttributes,
-  // CreateOptions,
 } from "sequelize";
 import sequelize from "./index";
 
@@ -53,5 +52,5 @@ export type UsersType = {
   id?: number;
   email?: string;
   password?: string;
-  line_id?: number;
+  lineId?: number;
 };
