@@ -1,3 +1,6 @@
+import axios from "axios"
+import { NextPageContext } from "next"
+import { parseCookies } from "nookies"
 import { useEffect, useState } from "react"
 import Layout from "../../components/Layout"
 
@@ -47,8 +50,8 @@ let places2: place[] = [
 
 
 
-const Place = () => {
-  const [places, setPlaces] = useState(place1)
+const Place = (props: any) => {
+  const [places, setPlaces] = useState(props.place)
   
   useEffect(() => {
     setDesable()
@@ -79,21 +82,40 @@ const Place = () => {
   }
 
   // 変更ボタン押下処理
-  const changeNameSubmit = (inputName: number, name: string) => {
+  const changeNameSubmit = async (inputName: number, name: string) => {
     console.log("aaaa")
     const hoge =  document.getElementsByName(`${inputName}`)
     const text = hoge[0] as HTMLInputElement
 
+    const myCookie = getCookie();
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${myCookie.AuthToken}`,
+      },
+    };
+
     if (text.value != name) {
       console.log(text.value)
-      var found =  places2.findIndex(e => e.id == inputName);
-      if (found) {
-        places2[found].name = text.value
+
+      const putPlace = {
+        placeId: text.name,
+        name: text.value,
       }
-      console.log(found);
-      
-    setPlaces(places2)
-    setDesable()
+      console.log(putPlace)
+
+      const url = `http://localhost:3001/api/v1/foods/places/${text.name}`
+      const res = await axios.put(url, putPlace, headers)
+      const placeRes = await axios.get("http://localhost:3001/api/v1/foods/places", headers)
+      // var found =  places2.findIndex(e => e.id == inputName);
+      // if (found) {
+      //   places2[found].name = text.value
+      // }
+      // console.log(found);
+      console.log("placeRes", placeRes.data)
+      let hoge = placeRes.data.places
+      hoge.shift()
+      setPlaces(hoge)
+      setDesable()
     } else {
       console.log("一致")
     }
@@ -104,7 +126,7 @@ const Place = () => {
     <Layout>
       <h1>保存場所管理ページ</h1>
       <div id="placeList">
-        {places.map((val, i) => {
+        {places.map((val:any, i:any) => {
           return (
             <div key={i}>
               <input type={"text"} name={`${val.id}`} autoComplete="off" onChange={(e) => changeName(e, val.name)} defaultValue={val.name}></input>
@@ -121,11 +143,49 @@ const Place = () => {
 export default Place
 
 
-export const getServerSideProps = async () => {
-  
+
+const getCookie = (ctx?: NextPageContext) => {
+  const cookie = parseCookies(ctx);
+  return cookie;
+};
+
+export const getServerSideProps = async (context: NextPageContext) => {
+  try {
+    const myCookie = getCookie(context);
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${myCookie.AuthToken}`,
+      },
+    };
+
+    const places = await axios.get('http://app:3001/api/v1/foods/places', headers);
+    let placeData = places.data.places;
+    console.log("res", placeData)
+    placeData.shift()
+
+
   return {
     props: {
-      data: "getServerSidePropsから受け取った"
+      place: placeData,
     },
   };
+
+  } catch (err: any) {
+    // console.log(err)
+    if (err.response) {
+      // レスポンスありのエラーハンドリング（実際には必要に応じた例外処理を実装する）
+      console.log(
+        `Error! code: ${err.response.status}, message: ${err.message}`
+      );
+    } else {
+      // レスポンスなしのエラーハンドリング（実際には必要に応じた例外処理を実装する）
+      console.log(err.message);
+    }
+
+
+  }
+  
 }
+
+
+

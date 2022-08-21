@@ -15,7 +15,7 @@ import Header from "../components/header"
 
 
 type Inputs = {
-  name: string;
+  email: string;
   password: string;
 };
 
@@ -26,12 +26,12 @@ type loginResponse = {
 
 // バリデーション規則
 const validate = yup.object({
-  name: yup
+  email: yup
       .string()
       .required('必須です')
       .matches(
-          /^([a-zA-Z0-9]){4,8}$/,
-          '半角英数字4〜8文字で入力してください',
+          /^([a-zA-Z0-9@.]){4,256}$/,
+          '半角英数字4〜256文字で入力してください',
       ),
   password: yup
       .string()
@@ -63,26 +63,26 @@ const Home = (props: propsType) => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
 
-    const reqObject = {
-      name: data.name,
-      password: data.password,
-    };
+      const reqObject = {
+        email: data.email,
+        password: data.password,
+      };
 
-    const result =
-      await axios.post('localhost:3001/users/login', reqObject);
-    console.log('login result: ', result.data);
-    const resultData: loginResponse = result.data;
+      const result =
+        await axios.post('http://localhost:3001/api/v1/users/login', reqObject);
+      console.log('login result: ', result.data);
+      const resultData: loginResponse = result.data;
 
-    console.log(resultData.token);
-    setCookie(undefined, 'AuthToken', resultData.token, {
-      maxAge: 7 * 24 * 60 * 60,
-    } );
-    route.push('/foods');
-    
-    reset();
+      console.log(resultData.token);
+      setCookie(undefined, 'AuthToken', resultData.token, {
+        maxAge: 7 * 24 * 60 * 60,
+      } );
+      route.push('/foods');
+      
+      reset();
 
     } catch (err) {
-
+      console.log(err)
     }
   };
 
@@ -100,8 +100,8 @@ const Home = (props: propsType) => {
         <input
           type={'text'}
           autoComplete="off"
-          {...register('name')}/>
-        <p>{errors.name?.message}</p>
+          {...register('email')}/>
+        <p>{errors.email?.message}</p>
         <p>password</p>
         <input
           type={'password'}

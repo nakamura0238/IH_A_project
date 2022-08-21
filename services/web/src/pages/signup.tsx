@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 
 type Inputs = {
-  name: string;
+  email: string;
   password: string;
 };
 
@@ -17,11 +17,11 @@ type loginResponse = {
 
 // バリデーション規則
 const validate = yup.object({
-  name: yup
+  email: yup
       .string()
       .required('必須です')
       .matches(
-          /^([a-zA-Z0-9]){4,8}$/,
+          /^([a-zA-Z0-9@.]){4,256}$/,
           '半角英数字4〜8文字で入力してください',
       ),
   password: yup
@@ -53,12 +53,11 @@ const Signup = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const reqObject = {
-        name: data.name,
+        email: data.email,
         password: data.password,
       };
 
-      const result =
-        await axios.post('localhost/users', reqObject);
+      const result = await axios.post('http://localhost:3001/api/v1/users', reqObject);
       console.log('login result: ', result.data);
       const resultData: loginResponse = result.data;
       route.push('/');
@@ -66,7 +65,7 @@ const Signup = () => {
       reset();
 
     } catch (err) {
-
+      console.log(err)
     }
 
   };
@@ -80,8 +79,8 @@ const Signup = () => {
         <input
           type={'text'}
           autoComplete="off"
-          {...register('name')}/>
-        <p>{errors.name?.message}</p>
+          {...register('email')}/>
+        <p>{errors.email?.message}</p>
         <p>password</p>
         <input
           type={'password'}
