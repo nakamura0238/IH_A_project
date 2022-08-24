@@ -1,0 +1,105 @@
+.overlay {
+  display: grid;
+  place-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80%;
+  width: 70%;
+  max-width: 450px;
+  padding: 5%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+.content h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.icons {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.content form {
+  width: 80%;
+}
+
+.content form select {
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 3px;
+}
+
+.content form input {
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 3px;
+}
+
+.content form textarea {
+  resize: none;
+  width: 100%;
+  height: 3rem;
+  margin-bottom: 5px;
+  padding: 3px;
+}
+
+.btnList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+.btnList button {
+  padding: 3px 10px;
+}
+
+.addbtn {
+  background-color: #0075c2;
+  border: none;
+  color: #ffffff;
+  border-radius: 3px;
+}
+
+.icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 90%;
+  padding: 10px 0;
+}
+
+.recipe {
+  display: flex;
+  flex-direction: row;
+  white-space: pre-wrap;
+  /* overflow-x: scroll; */
+  width: 100%;
+}
+
+.recipeItem {
+  width: 120px;
+  padding: 10px;
+}
+
+.recipeItem p {
+  overflow-wrap: break-word;
+  word-break: break-all;
+  font-size: 0.8rem;
+}

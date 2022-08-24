@@ -1,19 +1,10 @@
-import type { NextPage, NextPageContext } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/login.module.css'
-
-import axios from 'axios'
-import { setCookie } from 'nookies'
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useRouter } from 'next/router'
-
-
-import Header from "../components/header"
-import Link from 'next/link'
-
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import styles from "../styles/login.module.css"
 
 type Inputs = {
   email: string;
@@ -22,7 +13,7 @@ type Inputs = {
 
 type loginResponse = {
   id: number,
-  token: string
+  email: string
 }
 
 // バリデーション規則
@@ -31,8 +22,8 @@ const validate = yup.object({
       .string()
       .required('必須です')
       .matches(
-          /^([a-zA-Z0-9@.]){4,}$/,
-          '半角英数字4文字以上で入力してください',
+          /^([a-zA-Z0-9@.]){4,256}$/,
+          '半角英数字4〜8文字で入力してください',
       ),
   password: yup
       .string()
@@ -43,9 +34,8 @@ const validate = yup.object({
       ),
 });
 
-const Home = (props: propsType) => {
-
-  const route = useRouter();
+const Signup = () => {
+  const route = useRouter()
 
   const {
     register,
@@ -63,37 +53,30 @@ const Home = (props: propsType) => {
   // 送信処理
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-
       const reqObject = {
         email: data.email,
         password: data.password,
       };
 
-      const result =
-        await axios.post('http://localhost:3001/api/v1/users/login', reqObject);
+      const result = await axios.post('http://localhost:3001/api/v1/users', reqObject);
       console.log('login result: ', result.data);
       const resultData: loginResponse = result.data;
+      route.push('/');
 
-      console.log(resultData.token);
-      setCookie(undefined, 'AuthToken', resultData.token, {
-        maxAge: 7 * 24 * 60 * 60,
-      } );
-      route.push('/foods');
-      
       reset();
 
     } catch (err) {
       console.log(err)
     }
+
   };
 
   return (
     <div className={styles.container}>
-
-
       <main className={styles.main}>
-        <h1>ログイン</h1>
 
+        <h1>サインアップ</h1>
+        
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <p>email</p>
           <input
@@ -108,41 +91,16 @@ const Home = (props: propsType) => {
             {...register('password')}/>
           <p className={styles.error}>{errors.password?.message}</p>
           <div>
-            <button type="submit">ログイン</button>
+            <button type="submit">新規登録</button>
           </div>
         </form>
 
-        <Link href={"/signup"}>
-          <a className={styles.link}>新規登録</a>
+        <Link href={"/"}>
+        <a className={styles.link}>ログイン</a>
         </Link>
-
       </main>
-
     </div>
-  );
-};
-
-export default Home
-
-export const getServerSideProps = async (context: NextPageContext) => {
-  try {
-
-    return {
-      props: {
-        data: "getServerSidePropsから受け取った"
-      },
-    };
-    
-  } catch (err) {
-    console.log(err);
-    return {
-      props: {
-        data: "エラーが発生しました",
-      },
-    };
-  }
-};
-
-type propsType = {
-  data: string
+  )
 }
+
+export default Signup

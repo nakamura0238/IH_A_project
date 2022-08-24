@@ -1,0 +1,40 @@
+.footer {
+  position:fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 640px;
+  height: 3rem;
+  background-color: #ffffff;
+}
+
+.nav_item {
+  display: inline-block;
+  border: 1px solid #333333;
+  padding: 5px 15px;
+  background-color: #ffffff00;
+}
+
+.logout {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  left: 0;
+  top: -50px;
+  height: 50px;
+  padding: 10px 10px;
+  background-color: #ffffff;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+}
+
+.logout button {
+  padding: 5px 10px;
+  border: none;
+  color: white;
+  background-color: #d61546;
+  border-radius: 3px;
+}
