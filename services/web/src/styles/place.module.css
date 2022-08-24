@@ -40,9 +40,9 @@
 
 .item button {
   display: inline-block;
-  width: 15%;
+  /* width: 15%; */
   margin: 3px;
-  font-size : 1.1rem;
+  font-size : 1rem;
   border-radius: 5px;
 }
 

@@ -78,7 +78,7 @@ const Signup = () => {
         <h1>サインアップ</h1>
         
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <p>name</p>
+          <p>email</p>
           <input
             type={'text'}
             autoComplete="off"
@@ -91,7 +91,7 @@ const Signup = () => {
             {...register('password')}/>
           <p className={styles.error}>{errors.password?.message}</p>
           <div>
-            <button type="submit">Submit</button>
+            <button type="submit">新規登録</button>
           </div>
         </form>
 
