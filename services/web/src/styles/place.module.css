@@ -23,16 +23,27 @@
 }
 
 .item {
+  display: flex;
+  justify-content: space-around;
   width: 100%;
   margin-bottom: 5px;
-  padding: 5px;
-  border: 1px solid #333333;
-  border-radius: 5px;
   font-size : 1.1rem;
 }
 
 .item input {
-  margin: 5px;
+  display: inline-block;
+  width: 80%;
+  margin: 3px;
+  padding: 0 10px;
+  font-size : 1.1rem;
+}
+
+.item button {
+  display: inline-block;
+  width: 15%;
+  margin: 3px;
+  font-size : 1.1rem;
+  border-radius: 5px;
 }
 
 .btn {

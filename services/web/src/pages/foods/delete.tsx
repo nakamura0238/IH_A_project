@@ -14,9 +14,9 @@ const Delete = (props: any) => {
     name: string,
   }
 
-    type deleteId = {
-      id: number
-    }
+    // type deleteId = {
+    //   id: number
+    // }
 
   const options: option[] = [
     {id: 1, name: "test1",},
@@ -25,9 +25,9 @@ const Delete = (props: any) => {
     {id: 4, name: "test4",},
   ]
 
-  const lineDelete = async () => {
-    console.log("期限切れを削除")
-  }
+  // const lineDelete = async () => {
+  //   console.log("期限切れを削除")
+  // }
 
   const lsitDelete = async () => {
     const list: any = document.getElementsByName("checkbox")
@@ -70,26 +70,25 @@ const Delete = (props: any) => {
   return (
     <>
       <Layout>
-      <h1>食材削除</h1>
+        <main className={styles.main}>
+          <h1>食材削除</h1>
 
-      <div className='delete'>
-        <div className={styles.itemContainer}>
-          {foods.map((val:any, i:any) => {
-            return (
-              <label key={i}>
-                <div className={styles.item}>
-                  <input type="checkbox" name="checkbox" value={val.id} />
-                  {val.name}
-                </div>
-              </label>
-            )
-          })}
-        </div>
+          <div className={styles.itemContainer}>
+            {foods.map((val:any, i:any) => {
+              return (
+                <label key={i}>
+                  <div className={styles.item}>
+                    <input type="checkbox" name="checkbox" value={val.id} />
+                    {val.name}
+                  </div>
+                </label>
+              )
+            })}
+          </div>
 
-            {/* <button onClick={lineDelete}>期限切れ削除</button> */}
-            <button onClick={lsitDelete}>選択したものを削除</button>
-      </div>
-        
+          <button className={styles.btn} onClick={lsitDelete}>選択したものを削除</button>
+
+        </main>
       </Layout>
     </>
   )
@@ -132,6 +131,13 @@ export const getServerSideProps = async (context: NextPageContext) => {
     } else {
       // レスポンスなしのエラーハンドリング（実際には必要に応じた例外処理を実装する）
       console.log(err.message);
+    }
+
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
     }
 
 

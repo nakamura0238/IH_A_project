@@ -1,9 +1,10 @@
-
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import styles from "../styles/login.module.css"
 
 type Inputs = {
   email: string;
@@ -71,25 +72,34 @@ const Signup = () => {
   };
 
   return (
-    <>
-      <h1>サインアップページ</h1>
-      
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <p>name</p>
-        <input
-          type={'text'}
-          autoComplete="off"
-          {...register('email')}/>
-        <p>{errors.email?.message}</p>
-        <p>password</p>
-        <input
-          type={'password'}
-          autoComplete="off"
-          {...register('password')}/>
-        <p>{errors.password?.message}</p>
-        <button type="submit">Submit</button>
-      </form>
-    </>
+    <div className={styles.container}>
+      <main className={styles.main}>
+
+        <h1>サインアップ</h1>
+        
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <p>name</p>
+          <input
+            type={'text'}
+            autoComplete="off"
+            {...register('email')}/>
+          <p className={styles.error}>{errors.email?.message}</p>
+          <p>password</p>
+          <input
+            type={'password'}
+            autoComplete="off"
+            {...register('password')}/>
+          <p className={styles.error}>{errors.password?.message}</p>
+          <div>
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+
+        <Link href={"/"}>
+        <a className={styles.link}>ログイン</a>
+        </Link>
+      </main>
+    </div>
   )
 }
 

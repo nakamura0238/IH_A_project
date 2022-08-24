@@ -10,12 +10,13 @@ import Layout from "../../components/Layout"
 import { NextPageContext } from "next"
 import { parseCookies } from "nookies"
 import axios from "axios"
+import { url } from "inspector"
+import Link from "next/link"
 
 
 
 const Foods = (props: any) => {
 
-  console.log("aaa", props)
 
   const [showAddFlg, setShowAddFlg] = useState(false)
   const [showDetailFlg, setShowDetailFlg] = useState(false)
@@ -54,9 +55,20 @@ const Foods = (props: any) => {
   // food詳細
   const ShowDetailModal: React.FC<Props> = ({itemData, closeAction}) => {
 
+    const [recipe, setRecipe] = useState([])
 
-    console.log(itemData)
-    console.log(plData)
+    useEffect (() => {
+      const getRecipe = async () => {
+        const url = "https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?format=json&categoryId=" + itemData.categoryId + "&applicationId=1064732730884530181";
+        const hoge = await axios.get(url)
+        setRecipe(hoge.data.result)
+      }
+      if (itemData.categoryId != 0) {
+        getRecipe()
+      }
+      console.log(recipe)
+    }, [itemData.categoryId, recipe])
+
     const date = new Date(itemData.expirationDate)
     const  yyyy = date.getFullYear();
     const  mm = ("0"+(date.getMonth()+1)).slice(-2);
@@ -68,22 +80,14 @@ const Foods = (props: any) => {
     
     const foo = icons.filter((val: any) => val.id == currentIcon.iconId)[0]
 
-    console.log(foo)
-    console.log("category", category)
-    console.log("currentCategory", currentCategory)
-    console.log(icons)
-    
-
-
-
     const updateSubmit = async () => { 
       const doc: any = document.getElementById("updateForm")
       const categoryNum = doc.categoryID.selectedIndex
       
       const fuga = document.querySelectorAll("#categoryID option")
-      console.log(fuga[categoryNum])
+      // console.log(fuga[categoryNum])
 
-      console.log("categoryName", categoryNum)
+      // console.log("categoryName", categoryNum)
       const name = doc.name.value
       const categoryName = fuga[categoryNum].innerHTML
       const categoryId = doc.categoryID.value
@@ -92,11 +96,11 @@ const Foods = (props: any) => {
       const placeSelect = doc.placeSelect.value
       const comment = doc.comment.value
 
-      console.log(categoryId)
-      console.log(name)
-      console.log(expirationDate)
-      console.log(placeSelect)
-      console.log(comment)
+      // console.log(categoryId)
+      // console.log(name)
+      // console.log(expirationDate)
+      // console.log(placeSelect)
+      // console.log(comment)
 
       const myCookie = getCookie();
       const headers = {
@@ -130,7 +134,7 @@ const Foods = (props: any) => {
         }
       }
 
-      console.log(obj)
+      // console.log(obj)
 
       const add = await axios.put(`http://localhost:3001/api/v1/foods/${itemData.id}`, obj, headers)
       const list = await axios.get("http://localhost:3001/api/v1/foods", headers)
@@ -145,9 +149,8 @@ const Foods = (props: any) => {
       <div className={modal.overlay} onClick={closeAction}>
         <div className={modal.content} onClick={(e) => e.stopPropagation()}>
 
-          <h1>食材詳細</h1>
-            <p>アイコン</p>
-            <div className='image'>
+          <h2>食材詳細</h2>
+          <div className='image'>
             <button className={currentIcon == foo.id ? `currentIcon ${styles.button}`: styles.button}>
               <Image className={modal.img} src={`/${foo.imagePath}`} width={36} height={36} alt="" />
             </button>
@@ -187,14 +190,29 @@ const Foods = (props: any) => {
             <p>コメント</p>
             <textarea className={modal.textarea} name="comment" placeholder='コメント' defaultValue={itemData.comment}></textarea><br />
           </form>
-          <button className={modal.inputButton} value={'食材を追加'} onClick={updateSubmit}>更新</button>
 
-          <div className='a1'>
-            <p>おすすめレシピ：</p>
+          <div className={modal.btnList}>
+            <button onClick={closeAction}>Close</button>
+            <button className={modal.addbtn} value={'食材を追加'} onClick={updateSubmit}>更新</button>
           </div>
-          <button onClick={closeAction}>Close</button>
+
+            <p>おすすめレシピ：</p>
+            <div className={modal.recipe}>
+              {recipe.map((val:any, i) => {
+                return (
+                  <Link href={val.recipeUrl} key={i}>
+                    <div className={modal.recipeItem}>
+                      <Image src={val.foodImageUrl} width={100} height={70} alt="" objectFit={"cover"}></Image>
+                      <p>{val.recipeTitle}</p>
+                    </div>
+
+                  </Link>
+                )
+              })}
+              
+          </div>
         </div>
-      </div >
+      </div>
 
     )
   }
@@ -215,9 +233,9 @@ const Foods = (props: any) => {
       const categoryNum = doc.categoryID.selectedIndex
       
       const fuga = document.querySelectorAll("#categoryID option")
-      console.log(fuga[categoryNum].innerHTML)
+      // console.log(fuga[categoryNum].innerHTML)
 
-      console.log("categoryName", categoryNum)
+      // console.log("categoryName", categoryNum)
       const name = doc.name.value
       const categoryName = fuga[categoryNum].innerHTML
       const expirationDate = new Date(doc.expirationDate.value).getTime()
@@ -274,9 +292,9 @@ const Foods = (props: any) => {
     return (
       <div className={modal.overlay} onClick={closeAction}>
         <div className={modal.content} onClick={(e) => e.stopPropagation()}>
-          <h2 className={modal.title}>食材を追加</h2>
 
-          <div className='image'>
+          <h2 className={modal.title}>食材を追加</h2>
+          <div className={modal.icons}>
             {
               icons.map((val: any, i: any) => {
                 return (
@@ -289,7 +307,7 @@ const Foods = (props: any) => {
           </div>
 
           <form id="addForm">
-
+            <p>カテゴリ</p>
             <select name="categoryID" id="categoryID">
               {
                 category.map((val: any, i:any) => {
@@ -300,10 +318,14 @@ const Foods = (props: any) => {
               }
             </select>
             <br />
+
+            <p>食材名</p>
             <input className={modal.inputText} name="name" type="text" placeholder='食材名' autoComplete="off"/>
             <br />
+            <p>消費期限</p>
             <input className={modal.inputText} id="date" name="expirationDate" type="date" placeholder='消費期限' defaultValue={day} autoComplete="off"/>
             <br />
+            <p>保存場所</p>
             <input className={modal.inputText} name="place" type="text" placeholder='保存場所' autoComplete="off"/>
             <br />
             <select name="placeSelect" id="">
@@ -318,12 +340,15 @@ const Foods = (props: any) => {
               }
             </select>
             <br />
+            <p>コメント</p>
             <textarea className={modal.textarea} name="comment" id="" placeholder='コメント'></textarea>
             <br />
           </form>
-          <button className={modal.inputButton} value={'食材を追加'} onClick={addSubmit}>食材を追加</button>
 
-          <button onClick={closeAction}>close</button>
+          <div className={modal.btnList}>
+            <button onClick={closeAction}>閉じる</button>
+            <button className={modal.addbtn} value={'食材を追加'} onClick={addSubmit}>食材を追加</button>
+          </div>
         </div>
       </div>
 
@@ -342,23 +367,30 @@ const Foods = (props: any) => {
             食材一覧
           </h1>
 
-          
-          {foods.map((item:any, i: any) => {
+          <div id="placeList" className={styles.itemContainer}>
 
-            const date = new Date(item.expirationDate)
-            const  yyyy = date.getFullYear();
-            const  mm = ("0"+(date.getMonth()+1)).slice(-2);
-            const  dd = ("0"+date.getDate()).slice(-2);
-            const defaultDate = yyyy+'-'+mm+'-'+dd;
+            
+            {foods.map((item:any, i: any) => {
 
-            return (
-              <button key={i} onClick={() => showDetail(item)}>
-                <p>{item.name} {defaultDate}</p>
-              </button>
-            )
-          })}
+              const date = new Date(item.expirationDate)
+              const  yyyy = date.getFullYear();
+              const  mm = ("0"+(date.getMonth()+1)).slice(-2);
+              const  dd = ("0"+date.getDate()).slice(-2);
+              const defaultDate = yyyy+'-'+mm+'-'+dd;
 
-          <button onClick={showAdd}>add item</button>
+              return (
+                <button key={i}  className={styles.item} onClick={() => showDetail(item)}>
+                  <div>
+                    <p className={styles.name}>{item.name}</p>
+                    <p className={styles.date}>{defaultDate}</p>
+                  </div>
+                  <p className={styles.comment}>{item.comment}</p>
+                </button>
+              )
+            })}
+          </div>
+
+          <button className={styles.addbtn} onClick={showAdd}>＋</button>
 
         </main>
 
@@ -431,6 +463,13 @@ export const getServerSideProps = async (context: NextPageContext) => {
     } else {
       // レスポンスなしのエラーハンドリング（実際には必要に応じた例外処理を実装する）
       console.log(err.message);
+    }
+
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
     }
 
 

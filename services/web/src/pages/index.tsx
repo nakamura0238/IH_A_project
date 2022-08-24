@@ -1,7 +1,7 @@
 import type { NextPage, NextPageContext } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/login.module.css'
 
 import axios from 'axios'
 import { setCookie } from 'nookies'
@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 
 
 import Header from "../components/header"
+import Link from 'next/link'
 
 
 type Inputs = {
@@ -30,8 +31,8 @@ const validate = yup.object({
       .string()
       .required('必須です')
       .matches(
-          /^([a-zA-Z0-9@.]){4,256}$/,
-          '半角英数字4〜256文字で入力してください',
+          /^([a-zA-Z0-9@.]){4,}$/,
+          '半角英数字4文字以上で入力してください',
       ),
   password: yup
       .string()
@@ -89,28 +90,32 @@ const Home = (props: propsType) => {
   return (
     <div className={styles.container}>
 
-      <Header></Header>
 
       <main className={styles.main}>
-        <h1>ログインページ</h1>
-        <h1>{props.data}</h1>
+        <h1>ログイン</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <p>name</p>
-        <input
-          type={'text'}
-          autoComplete="off"
-          {...register('email')}/>
-        <p>{errors.email?.message}</p>
-        <p>password</p>
-        <input
-          type={'password'}
-          autoComplete="off"
-          {...register('password')}/>
-        <p>{errors.password?.message}</p>
-        <button type="submit">Submit</button>
-      </form>
-      
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <p>email</p>
+          <input
+            type={'text'}
+            autoComplete="off"
+            {...register('email')}/>
+          <p className={styles.error}>{errors.email?.message}</p>
+          <p>password</p>
+          <input
+            type={'password'}
+            autoComplete="off"
+            {...register('password')}/>
+          <p className={styles.error}>{errors.password?.message}</p>
+          <div>
+            <button type="submit">ログイン</button>
+          </div>
+        </form>
+
+        <Link href={"/signup"}>
+          <a className={styles.link}>新規登録</a>
+        </Link>
+
       </main>
 
     </div>
@@ -121,11 +126,7 @@ export default Home
 
 export const getServerSideProps = async (context: NextPageContext) => {
   try {
-    // トークンの取得
-    
-    // 表示するデータを取得する
 
-    // 取得データをコンポーネントに渡す
     return {
       props: {
         data: "getServerSidePropsから受け取った"

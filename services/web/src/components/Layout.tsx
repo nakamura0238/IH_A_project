@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import styles from '../styles/common.module.css';
 import Header from "../components/header"
+import Footer from './footer';
 
 type Props = {
   children: ReactNode;
@@ -9,8 +10,8 @@ type Props = {
 const Layout = ({children, ...props}: Props) => {
   return (
     <div className={styles.container} {...props}>
-      <Header></Header>
       {children}
+      <Footer></Footer>
     </div>
   );
 };
