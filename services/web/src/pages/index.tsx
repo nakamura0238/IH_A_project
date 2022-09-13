@@ -82,7 +82,8 @@ const Home = (props: propsType) => {
       
       reset();
 
-    } catch (err) {
+    } catch (err: any) {
+      alert(err.response.data.message)
       console.log(err)
     }
   };
